@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aide CLI - Mots Croisés</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/mots-croises.css">
+  <link rel="stylesheet" href="css/aide-cli-mots-croises.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+  <nav class="main-nav" aria-label="Navigation principale">
+    <div class="main-nav-bar">
+      <button
+        id="mainMenuToggle"
+        class="main-nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mainMenuPanel"
+        aria-label="Ouvrir le menu"
+        title="Menu"
+      >
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="main-nav-panel" id="mainMenuPanel">
+      <a href="https://www.ralentirtravaux.com" class="main-nav-link main-nav-link-home" title="Retour à l'accueil" aria-label="Accueil">
+        <i class="fas fa-house" aria-hidden="true"></i>
+      </a>
+      <a href="index.html" class="main-nav-link">
+        <i class="fas fa-chalkboard" aria-hidden="true"></i>
+        <span>En classe</span>
+      </a>
+      <a href="notes.html" class="main-nav-link">
+        <i class="fas fa-pen-to-square" aria-hidden="true"></i>
+        <span>Notes</span>
+      </a>
+      <a href="groupes.html" class="main-nav-link">
+        <i class="fas fa-users" aria-hidden="true"></i>
+        <span>Groupes</span>
+      </a>
+      <a href="kanban.html" class="main-nav-link">
+        <i class="fas fa-table-columns" aria-hidden="true"></i>
+        <span>Kanban</span>
+      </a>
+      <a href="mots-croises.html" class="main-nav-link">
+        <i class="fas fa-table-cells" aria-hidden="true"></i>
+        <span>Mots croisés</span>
+      </a>
+      <a href="boutons.html" class="main-nav-link">
+        <i class="fas fa-toggle-on" aria-hidden="true"></i>
+        <span>Boutons</span>
+      </a>
+      <a href="lecture.html" class="main-nav-link">
+        <i class="fas fa-book-open" aria-hidden="true"></i>
+        <span>Lecture</span>
+      </a>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Activer le mode sombre" title="Activer le mode sombre">
+        <i class="fas fa-moon" aria-hidden="true"></i>
+      </button>
+    </div>
+  </nav>
+
+  <h1 class="site-title"><i class="fas fa-terminal"></i> Aide CLI</h1>
+
+  <main class="cli-help">
+    <section class="hero">
+      <div class="panel hero-main">
+        <p class="eyebrow">Mots Croisés</p>
+        <h2 class="hero-title">Publier une grille depuis le Terminal</h2>
+        <p class="hero-copy">
+          Le CLI permet d’installer l’outil, de préparer un fichier texte simple, puis de publier une grille de mots croisés sur le site avec une seule commande.
+        </p>
+      </div>
+
+      <aside class="panel hero-side">
+        <p class="section-title">Ce qu’il faut</p>
+        <ul class="hero-side-list">
+          <li class="hero-side-item"><i class="fa-solid fa-check" aria-hidden="true"></i><span>Node.js installé (<code>brew install node</code>)</span></li>
+          <li class="hero-side-item"><i class="fa-solid fa-check" aria-hidden="true"></i><span>Un fichier texte contenant les mots</span></li>
+          <li class="hero-side-item"><i class="fa-solid fa-check" aria-hidden="true"></i><span>Une connexion internet pour publier la grille</span></li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel content-panel content-panel--narrow">
+        <section class="section">
+          <h3 class="section-title">Installer le CLI</h3>
+          <p class="section-copy">Lance simplement cette commande dans le Terminal :</p>
+          <pre><code>curl -fsSL https://www.ralentirtravaux.com/apps/en-classe/install-mots-croises.sh | zsh</code></pre>
+          <div class="callout" style="margin-top:12px;">
+            <strong>Installation par défaut</strong>
+            <p>Le CLI sera installé dans <code>~/Documents/Mots-croises</code>.</p>
+          </div>
+          <p class="section-copy" style="margin-top:12px;">Pour choisir un autre dossier :</p>
+          <pre><code>curl -fsSL https://www.ralentirtravaux.com/apps/en-classe/install-mots-croises.sh | zsh -s ~/Documents/Mots-croises</code></pre>
+        </section>
+
+        <section class="section">
+          <h3 class="section-title">La commande essentielle</h3>
+          <p class="section-copy">Place-toi d’abord dans le dossier où le CLI a été installé :</p>
+          <pre><code>cd ~/Documents/Mots-croises</code></pre>
+          <p class="section-copy" style="margin-top:12px;">Puis lance :</p>
+          <pre><code>mots-croises publish liste.txt</code></pre>
+          <p class="section-copy" style="margin-top:12px;">Si tout se passe bien, le Terminal renvoie une URL de publication.</p>
+        </section>
+
+        <section class="section">
+          <h3 class="section-title">Format conseillé pour <code>liste.txt</code></h3>
+          <pre><code>HORIZONTAL
+MOT : DÉFINITION
+MOT : DÉFINITION
+
+VERTICAL
+MOT : DÉFINITION
+MOT : DÉFINITION</code></pre>
+          <ul style="margin-top:12px;">
+            <li><code>HORIZONTAL</code> indique la section horizontale</li>
+            <li><code>VERTICAL</code> indique la section verticale</li>
+            <li>Chaque ligne contient un mot, puis <code>:</code>, puis sa définition</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h3 class="section-title">Variantes utiles</h3>
+          <p class="section-copy">Définir un titre :</p>
+          <pre><code>mots-croises publish liste.txt --title "Vocabulaire de la poésie"</code></pre>
+          <p class="section-copy" style="margin-top:12px;">Changer la couleur de fond :</p>
+          <pre><code>mots-croises publish liste.txt --block-color "#222222"</code></pre>
+          <p class="section-copy" style="margin-top:12px;">Lire directement depuis le Terminal :</p>
+          <pre><code>mots-croises publish liste.txt</code></pre>
+        </section>
+
+        <section class="section">
+          <h3 class="section-title">Exemple complet</h3>
+          <ol>
+            <li>Créer un fichier <code>liste.txt</code></li>
+            <li>Y mettre par exemple :</li>
+          </ol>
+          <pre style="margin-top:12px;"><code>Conjugue les verbes entre parenthèses au futur de l'indicatif.
+
+HORIZONTAL
+SERAI : ÊTRE — 1re personne du singulier
+MOURRA : MOURIR — 3e personne du singulier
+VIENDREZ : VENIR — 2e personne du pluriel
+FERAS : FAIRE — 2e personne du singulier
+POURRONS : POUVOIR — 1re personne du pluriel
+AURA : AVOIR — 3e personne du singulier
+PARTIRONT : PARTIR — 3e personne du pluriel
+RENDRAI : RENDRE — 1re personne du singulier
+VOUDRAS : VOULOIR — 2e personne du singulier
+TROUVEREZ : TROUVER — 2e personne du pluriel
+
+VERTICAL
+IRONS : ALLER — 1re personne du pluriel
+SAURAS : SAVOIR — 2e personne du singulier
+PRENDRAI : PRENDRE — 1re personne du singulier
+FAUDRA : FALLOIR — 3e personne du singulier
+DIREZ : DIRE — 2e personne du pluriel
+GUÉRIRONT : GUÉRIR — 3e personne du pluriel
+VERRAI : VOIR — 1re personne du singulier
+RECEVRONS : RECEVOIR — 1re personne du pluriel
+SORTIRAS : SORTIR — 2e personne du singulier
+DEVRONT : DEVOIR — 3e personne du pluriel</code></pre>
+          <p class="section-copy" style="margin-top:12px;">Ensuite :</p>
+          <pre><code>cd ~/Documents/Mots-croises
+mots-croises publish liste.txt</code></pre>
+        </section>
+
+        <section class="section">
+          <h3 class="section-title">Vérifier Node.js</h3>
+          <pre><code>node -v</code></pre>
+          <p class="section-copy" style="margin-top:12px;">Si un numéro de version s’affiche, c’est bon.</p>
+        </section>
+
+        <section class="section">
+          <h3 class="section-title">Vérifier le CLI</h3>
+          <pre><code>mots-croises --help</code></pre>
+        </section>
+
+        <section class="section">
+          <h3 class="section-title">En cas de problème</h3>
+          <div class="troubles">
+            <div class="trouble">
+              <h4><code>node: command not found</code></h4>
+              <p>Node.js n’est pas installé ou n’est pas accessible dans le Terminal.</p>
+              <div class="link-list">
+                <a class="inline-link" href="https://nodejs.org/">https://nodejs.org/</a>
+              </div>
+            </div>
+            <div class="trouble">
+              <h4><code>Aucun mot exploitable dans l'entrée.</code></h4>
+              <p>Le fichier est vide ou n’est pas dans un format reconnu.</p>
+              <pre><code>HORIZONTAL
+SERAI : ÊTRE — 1re personne du singulier
+VERTICAL
+IRONS : ALLER — 1re personne du pluriel</code></pre>
+            </div>
+            <div class="trouble">
+              <h4><code>fetch failed</code></h4>
+              <p>Le service de publication ne répond pas, ou la connexion internet ne fonctionne pas.</p>
+              <div class="link-list">
+                <a class="inline-link" href="https://www.ralentirtravaux.com/apps/en-classe/mots-croises.html">https://www.ralentirtravaux.com/apps/en-classe/mots-croises.html</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="summary-block">
+            <h3>En résumé</h3>
+            <p>Une fois le CLI installé, retiens simplement :</p>
+            <pre><code>cd ~/Documents/Mots-croises
+mots-croises publish liste.txt</code></pre>
+          </div>
+        </section>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="date">
+      <p>Réalisé avec <span class="heart">&#x2764;&#xFE0E;</span> par <a class="footer-author-link" href="https://yann-houry.netlify.app" target="_blank" rel="noopener noreferrer">Yann Houry</a>, responsable de l'innovation à l'institut Florimont de Genève</p>
+      <nav class="footer-nav">
+        <a href="qrcode.html">QR Code</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="video.html">Vidéo</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="gifs.html">GIF</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="signature.html">Signature</a>
+        <span class="footer-nav-sep">|</span>
+        <a href="captures.html">Captures</a>
+      </nav>
+      <p class="footer-support">
+        <span>Soutenez <span class="footer-brand-name">Ralentir travaux</span> en faisant </span>
+        <a class="footer-support-link" href="https://paypal.me/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Faire un don sur PayPal">
+          un don sur <i class="fa-brands fa-paypal" aria-hidden="true"></i>
+        </a>
+        <span> ou en </span>
+        <a class="footer-support-link" href="https://www.buymeacoffee.com/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Offrir un café via Buy Me a Coffee">
+          m'offrant un <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+        </a>
+        <span>.</span>
+      </p>
+      <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></p>
+      <span class="annee">2026</span>
+    </div>
+  </footer>
+
+  <script src="js/menu.js"></script>
+  <script src="js/aide-cli-mots-croises.js"></script>
+</body>
+</html>

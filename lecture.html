@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Comic+Neue:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/lecture.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
+    <script src="js/theme.js"></script>
+</head>
+<body>
+    <nav class="main-nav" aria-label="Navigation principale">
+        <div class="main-nav-bar">
+            <button
+                id="mainMenuToggle"
+                class="main-nav-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="mainMenuPanel"
+                aria-label="Ouvrir le menu"
+                title="Menu"
+            >
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="main-nav-panel" id="mainMenuPanel">
+            <a href="https://www.ralentirtravaux.com" class="main-nav-link main-nav-link-home" title="Retour à l'accueil" aria-label="Accueil">
+                <i class="fas fa-house" aria-hidden="true"></i>
+            </a>
+            <a href="index.html" class="main-nav-link">
+                <i class="fas fa-chalkboard" aria-hidden="true"></i>
+                <span>En classe</span>
+            </a>
+            <a href="notes.html" class="main-nav-link">
+                <i class="fas fa-pen-to-square" aria-hidden="true"></i>
+                <span>Notes</span>
+            </a>
+            <a href="groupes.html" class="main-nav-link">
+                <i class="fas fa-users" aria-hidden="true"></i>
+                <span>Groupes</span>
+            </a>
+            <a href="kanban.html" class="main-nav-link">
+                <i class="fas fa-table-columns" aria-hidden="true"></i>
+                <span>Kanban</span>
+            </a>
+            <a href="mots-croises.html" class="main-nav-link">
+                <i class="fas fa-table-cells" aria-hidden="true"></i>
+                <span>Mots croisés</span>
+            </a>
+            <a href="boutons.html" class="main-nav-link">
+                <i class="fas fa-toggle-on" aria-hidden="true"></i>
+                <span>Boutons</span>
+            </a>
+            <a href="lecture.html" class="main-nav-link main-nav-link-active" aria-current="page">
+                <i class="fas fa-book-open" aria-hidden="true"></i>
+                <span>Lecture</span>
+            </a>
+            <button type="button" id="themeToggle" class="theme-toggle" aria-label="Activer le mode sombre" title="Activer le mode sombre"><i class="fas fa-moon" aria-hidden="true"></i></button>
+        </div>
+    </nav>
+
+    <h1 class="site-title"><i class="fas fa-book-open"></i> Lecture</h1>
+
+    <div class="lf-app">
+        <!-- Introduction Card (Collapsible) -->
+        <details class="intro-card">
+            <summary class="intro-summary">
+                <div class="intro-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h2>Comment ça marche ?</h2>
+                <i class="fas fa-chevron-down intro-chevron"></i>
+            </summary>
+            <div class="intro-content">
+                <p>Copie et colle ton texte ci-dessous, puis ajuste les paramètres selon tes préférences. Tu peux modifier la police, la taille, les couleurs, l'espacement et même écouter le texte à voix haute.</p>
+                <p class="help-link-wrapper"><a href="help.html" class="help-link"><i class="fas fa-circle-question"></i> Découvrir toutes les fonctionnalités</a></p>
+            </div>
+        </details>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Text Editor Section -->
+            <section class="editor-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-pen-to-square"></i>
+                    </div>
+                    <h2>Ton texte</h2>
+                    <div class="character-count">
+                        <span id="char-count">0</span> caractères
+                    </div>
+                </div>
+                <div class="editor-container">
+                    <div class="editable-text-wrapper">
+                        <div class="editable-text" contenteditable="true" id="editable-text" placeholder="Colle ou écris ton texte ici...">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </div>
+                        <div class="reading-ruler" id="reading-ruler-element"></div>
+                    </div>
+                    <div class="editor-toolbar">
+                        <!-- Boutons principaux -->
+                        <button class="toolbar-btn toolbar-btn--icon" id="copy-text" title="Copier le texte" aria-label="Copier le texte">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="toolbar-btn toolbar-btn--icon" id="share-link" title="Copier le lien de partage" aria-label="Copier le lien de partage">
+                            <i class="fas fa-share-nodes"></i>
+                        </button>
+                        <button class="toolbar-btn toolbar-btn--icon" id="clear-text" title="Effacer le texte" aria-label="Effacer le texte">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+
+                        <!-- Barre de formatage (visible uniquement lors de la sélection) -->
+                        <div class="format-toolbar" id="format-toolbar">
+                            <button class="format-btn" data-command="undo" title="Annuler (Ctrl+Z)">
+                                <i class="fas fa-rotate-left"></i>
+                            </button>
+                            <button class="format-btn" data-command="redo" title="Rétablir (Ctrl+Y)">
+                                <i class="fas fa-rotate-right"></i>
+                            </button>
+                            <div class="format-separator"></div>
+                            <button class="format-btn" data-command="bold" title="Gras (Ctrl+B)">
+                                <i class="fas fa-bold"></i>
+                            </button>
+                            <button class="format-btn" data-command="italic" title="Italique (Ctrl+I)">
+                                <i class="fas fa-italic"></i>
+                            </button>
+                            <button class="format-btn" data-command="underline" title="Souligné (Ctrl+U)">
+                                <i class="fas fa-underline"></i>
+                            </button>
+                            <button class="format-btn" data-command="formatBlock" data-value="h2" title="Mettre en évidence (titre)">
+                                <i class="fas fa-text-height"></i>
+                            </button>
+                            <button class="format-btn" data-command="insertUnorderedList" title="Liste à puces">
+                                <i class="fas fa-list-ul"></i>
+                            </button>
+                            <button class="format-btn" data-command="insertOrderedList" title="Liste numérotée">
+                                <i class="fas fa-list-ol"></i>
+                            </button>
+                            <div class="color-picker-container" title="Couleur du texte">
+                                <button class="format-btn color-btn" id="text-color-btn">
+                                    <i class="fas fa-palette"></i>
+                                    <span class="color-indicator" id="color-indicator"></span>
+                                </button>
+                                <input type="color" id="format-text-color" value="#000000">
+                            </div>
+                            <button class="format-btn" data-command="removeFormat" title="Effacer le formatage">
+                                <i class="fas fa-eraser"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Controls Grid -->
+            <div class="controls-grid">
+                <!-- Text-to-Speech Card -->
+                <section class="control-card speech-card">
+                    <div class="card-header">
+                        <div class="card-icon speech-icon">
+                            <i class="fas fa-volume-high"></i>
+                        </div>
+                        <h3>Lecture audio</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="speech-controls">
+                            <button class="speech-btn play-btn" id="play-pause-btn" title="Lecture">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="speech-btn stop-btn" id="stop-btn" title="Arrêter">
+                                <i class="fas fa-stop"></i>
+                            </button>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="speech-rate">
+                                <i class="fas fa-gauge-high"></i>
+                                Vitesse
+                            </label>
+                            <div class="range-container">
+                                <input type="range" id="speech-rate" min="0.5" max="2" step="0.1" value="1">
+                                <span class="range-value" id="rate-value">1x</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="speech-lang-select">
+                                <i class="fas fa-globe"></i>
+                                Langue
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="speech-lang-select">
+                                    <option value="fr-FR">Français</option>
+                                    <option value="en-US">English (US)</option>
+                                    <option value="en-GB">English (UK)</option>
+                                    <option value="es-ES">Español</option>
+                                    <option value="de-DE">Deutsch</option>
+                                    <option value="it-IT">Italiano</option>
+                                    <option value="pt-PT">Português</option>
+                                </select>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Typography Card -->
+                <section class="control-card typography-card">
+                    <div class="card-header">
+                        <div class="card-icon typography-icon">
+                            <i class="fas fa-font"></i>
+                        </div>
+                        <h3>Typographie</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="control-group">
+                            <label for="font-family">
+                                <i class="fas fa-text-height"></i>
+                                Police
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="font-family"></select>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="font-size">
+                                <i class="fas fa-up-right-and-down-left-from-center"></i>
+                                Taille
+                            </label>
+                            <div class="range-container">
+                                <input type="range" id="font-size" min="12" max="48" value="18">
+                                <span class="range-value" id="size-value">18px</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="letter-spacing">
+                                <i class="fas fa-text-width"></i>
+                                Espacement lettres
+                            </label>
+                            <div class="range-container">
+                                <input type="range" id="letter-spacing" min="0" max="10" step="0.5" value="0">
+                                <span class="range-value" id="letter-value">0px</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="spacing">
+                                <i class="fas fa-arrows-up-down"></i>
+                                Interligne
+                            </label>
+                            <div class="range-container">
+                                <input type="range" id="spacing" min="1" max="3" step="0.1" value="1.6">
+                                <span class="range-value" id="line-value">1.6</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Colors Card -->
+                <section class="control-card colors-card">
+                    <div class="card-header">
+                        <div class="card-icon colors-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>Couleurs</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="color-controls">
+                            <div class="color-group">
+                                <label for="font-color">Texte</label>
+                                <div class="color-picker-wrapper">
+                                    <input type="color" id="font-color" value="#2d3748">
+                                    <span class="color-preview" id="font-color-preview"></span>
+                                </div>
+                            </div>
+                            <div class="color-group">
+                                <label for="background-color">Fond</label>
+                                <div class="color-picker-wrapper">
+                                    <input type="color" id="background-color" value="#ffffff">
+                                    <span class="color-preview" id="bg-color-preview"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="preset-colors">
+                            <p class="preset-label">Thèmes recommandés</p>
+                            <div class="color-presets">
+                                <button class="preset-btn" data-bg="#fffbeb" data-text="#2d3748" title="Crème">
+                                    <span class="preset-sample" style="background: #fffbeb; color: #2d3748;">Aa</span>
+                                </button>
+                                <button class="preset-btn" data-bg="#e6f3ff" data-text="#1a365d" title="Bleu clair">
+                                    <span class="preset-sample" style="background: #e6f3ff; color: #1a365d;">Aa</span>
+                                </button>
+                                <button class="preset-btn" data-bg="#f0fdf4" data-text="#166534" title="Vert clair">
+                                    <span class="preset-sample" style="background: #f0fdf4; color: #166534;">Aa</span>
+                                </button>
+                                <button class="preset-btn" data-bg="#fdf4ff" data-text="#6b21a8" title="Lavande">
+                                    <span class="preset-sample" style="background: #fdf4ff; color: #6b21a8;">Aa</span>
+                                </button>
+                                <button class="preset-btn" data-bg="#1a1a2e" data-text="#eaeaea" title="Mode sombre">
+                                    <span class="preset-sample" style="background: #1a1a2e; color: #eaeaea;">Aa</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Accessibility Card -->
+                <section class="control-card accessibility-card">
+                    <div class="card-header">
+                        <div class="card-icon accessibility-icon">
+                            <i class="fas fa-universal-access"></i>
+                        </div>
+                        <h3>Accessibilité</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="toggle-group">
+                            <label class="toggle-label" for="bionic-reading">
+                                <div class="toggle-info">
+                                    <i class="fas fa-bold"></i>
+                                    <span>Lecture bionique</span>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="bionic-reading">
+                                    <span class="toggle-slider"></span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="toggle-group">
+                            <label class="toggle-label" for="line-background">
+                                <div class="toggle-info">
+                                    <i class="fas fa-highlighter"></i>
+                                    <span>Surligner les lignes</span>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="line-background">
+                                    <span class="toggle-slider"></span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="toggle-group">
+                            <label class="toggle-label" for="reading-ruler">
+                                <div class="toggle-info">
+                                    <i class="fas fa-ruler-horizontal"></i>
+                                    <span>Règle de lecture</span>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="reading-ruler">
+                                    <span class="toggle-slider"></span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="toggle-group">
+                            <label class="toggle-label" for="word-definition">
+                                <div class="toggle-info">
+                                    <i class="fas fa-book"></i>
+                                    <span>Définitions</span>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="word-definition">
+                                    <span class="toggle-slider"></span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <button class="focus-btn" id="focus-mode-btn">
+                            <i class="fas fa-expand"></i>
+                            Mode concentration
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <button class="action-btn reset-btn" id="reset-settings">
+                    <i class="fas fa-rotate-left"></i>
+                    Réinitialiser
+                </button>
+                <button class="action-btn save-btn" id="save-settings">
+                    <i class="fas fa-bookmark"></i>
+                    Sauvegarder mes préférences
+                </button>
+            </section>
+        </main>
+    </div>
+
+    <!-- Focus Mode Overlay (outside .lf-app for position: fixed) -->
+    <div class="lf-focus-overlay" id="focus-overlay">
+        <div class="focus-container">
+            <button class="exit-focus-btn" id="exit-focus-btn">
+                <i class="fas fa-compress"></i>
+                Quitter
+            </button>
+            <div class="focus-text-wrapper">
+                <div class="focus-text-area" id="focus-text-area"></div>
+                <div class="focus-reading-ruler" id="focus-reading-ruler-element"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Word Definition Popup (outside .lf-app for position: fixed) -->
+    <div class="lf-definition-popup" id="definition-popup">
+        <div class="definition-header">
+            <span class="definition-word" id="definition-word"></span>
+            <span class="definition-pos" id="definition-pos"></span>
+            <button class="definition-close" id="definition-close">&times;</button>
+        </div>
+        <div class="definition-body" id="definition-body"></div>
+    </div>
+
+    <!-- Toast Notifications (outside .lf-app for position: fixed) -->
+    <div class="lf-toast-container" id="toast-container"></div>
+
+    <footer>
+        <div class="date">
+            <p>Réalisé avec <span class="heart">&#10084;&#xFE0E;</span> par <a class="footer-author-link" href="https://yann-houry.netlify.app" target="_blank" rel="noopener noreferrer">Yann Houry</a>, responsable de l'innovation à l'institut Florimont de Genève</p>
+            <nav class="footer-nav">
+                <a href="qrcode.html">QR Code</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="video.html">Vidéo</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="gifs.html">GIF</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="signature.html">Signature</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="captures.html">Captures</a>
+            </nav>
+            <p class="footer-support">
+                <span>Soutenez <span class="footer-brand-name">Ralentir travaux</span> en faisant </span>
+                <a class="footer-support-link" href="https://paypal.me/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Faire un don sur PayPal">
+                    un don sur <i class="fa-brands fa-paypal" aria-hidden="true"></i>
+                </a>
+                <span> ou en </span>
+                <a class="footer-support-link" href="https://www.buymeacoffee.com/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Offrir un café via Buy Me a Coffee">
+                    m'offrant un <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                </a>
+                <span>.</span>
+            </p>
+
+            <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></p>
+
+            <span class="annee">2026</span>
+        </div>
+    </footer>
+
+    <script src="js/menu.js"></script>
+    <script src="js/lecture.js"></script>
+</body>
+</html>

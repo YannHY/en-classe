@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/kanban.css">
+    <script src="js/theme.js"></script>
+</head>
+<body class="page-kanban">
+    <nav class="main-nav" aria-label="Navigation principale">
+        <div class="main-nav-bar">
+            <button
+                id="mainMenuToggle"
+                class="main-nav-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="mainMenuPanel"
+                aria-label="Ouvrir le menu"
+                title="Menu"
+            >
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="main-nav-panel" id="mainMenuPanel">
+            <a href="https://www.ralentirtravaux.com" class="main-nav-link main-nav-link-home" title="Retour à l'accueil" aria-label="Accueil">
+                <i class="fas fa-house" aria-hidden="true"></i>
+            </a>
+            <a href="index.html" class="main-nav-link">
+                <i class="fas fa-chalkboard" aria-hidden="true"></i>
+                <span>En classe</span>
+            </a>
+            <a href="notes.html" class="main-nav-link">
+                <i class="fas fa-pen-to-square" aria-hidden="true"></i>
+                <span>Notes</span>
+            </a>
+            <a href="groupes.html" class="main-nav-link">
+                <i class="fas fa-users" aria-hidden="true"></i>
+                <span>Groupes</span>
+            </a>
+            <a href="kanban.html" class="main-nav-link main-nav-link-active" aria-current="page">
+                <i class="fas fa-table-columns" aria-hidden="true"></i>
+                <span>Kanban</span>
+            </a>
+            <a href="mots-croises.html" class="main-nav-link">
+                <i class="fas fa-table-cells" aria-hidden="true"></i>
+                <span>Mots croisés</span>
+            </a>
+            <a href="boutons.html" class="main-nav-link">
+                <i class="fas fa-toggle-on" aria-hidden="true"></i>
+                <span>Boutons</span>
+            </a>
+            <a href="lecture.html" class="main-nav-link">
+                <i class="fas fa-book-open" aria-hidden="true"></i>
+                <span>Lecture</span>
+            </a>
+            <button type="button" id="themeToggle" class="theme-toggle" aria-label="Activer le mode sombre" title="Activer le mode sombre"><i class="fas fa-moon" aria-hidden="true"></i></button>
+        </div>
+    </nav>
+
+    <h1 class="site-title"><i class="fas fa-table-columns"></i> Kanban</h1>
+
+    <div class="k-app">
+        <!-- Toolbar (ex-header) -->
+        <div class="k-toolbar">
+            <div class="k-toolbar-actions">
+                <button id="btn-new-project" class="btn btn-primary"><i class="fa-solid fa-plus"></i> <span data-i18n="newProject">Nouveau Projet</span></button>
+                <button id="btn-collaborate" class="btn btn-secondary"><i class="fa-solid fa-user-group"></i> <span data-i18n="collaborate">Collaborer</span></button>
+                <span id="sync-status" class="sync-status"><i class="fa-solid fa-rotate"></i> <span data-i18n="connecting">Connexion...</span></span>
+            </div>
+        </div>
+
+        <!-- Contrôles Kanban -->
+        <div class="kanban-controls">
+            <button id="btn-add-column" class="btn btn-outline"><i class="fa-solid fa-plus"></i> <span data-i18n="addColumn">Ajouter une colonne</span></button>
+        </div>
+
+        <!-- Tableau Kanban -->
+        <div class="kanban-board" id="kanban-board">
+            <!-- Les colonnes seront ajoutées ici dynamiquement -->
+        </div>
+    </div>
+
+    <!-- Éléments position:fixed HORS .k-app -->
+
+    <!-- Modal pour nouveau projet -->
+    <div class="k-modal" id="modal-new-project">
+        <div class="k-modal-content">
+            <span class="k-modal-close"><i class="fa-solid fa-xmark"></i></span>
+            <h3 data-i18n="createNewProject">Créer un nouveau projet</h3>
+            <form id="form-new-project">
+                <div class="form-group">
+                    <label for="project-title" data-i18n="projectName">Nom du projet</label>
+                    <input type="text" id="project-title" required data-i18n-placeholder="projectNamePlaceholder" placeholder="Ex: Projet de Sciences">
+                </div>
+                <button type="submit" class="btn btn-primary" data-i18n="create">Créer</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal pour collaborer -->
+    <div class="k-modal" id="modal-collaborate">
+        <div class="k-modal-content">
+            <span class="k-modal-close"><i class="fa-solid fa-xmark"></i></span>
+            <h3 data-i18n="joinProject">Rejoindre un projet</h3>
+            <form id="form-collaborate">
+                <div class="form-group">
+                    <label for="collab-code" data-i18n="shareCodeLabel">Code de partage</label>
+                    <input type="text" id="collab-code" required placeholder="Ex: ABC123" maxlength="6" style="text-transform: uppercase;">
+                </div>
+                <button type="submit" class="btn btn-primary" data-i18n="join">Rejoindre</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal pour ajouter une colonne -->
+    <div class="k-modal" id="modal-add-column">
+        <div class="k-modal-content">
+            <span class="k-modal-close"><i class="fa-solid fa-xmark"></i></span>
+            <h3 data-i18n="addColumnTitle">Ajouter une colonne</h3>
+            <form id="form-add-column">
+                <div class="form-group">
+                    <label for="column-title" data-i18n="columnName">Nom de la colonne</label>
+                    <input type="text" id="column-title" required data-i18n-placeholder="columnNamePlaceholder" placeholder="Ex: En cours">
+                </div>
+                <div class="form-group">
+                    <label for="column-color" data-i18n="color">Couleur</label>
+                    <input type="color" id="column-color" value="#06b6d4">
+                </div>
+                <button type="submit" class="btn btn-primary" data-i18n="add">Ajouter</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal pour ajouter/éditer une tâche -->
+    <div class="k-modal" id="modal-task">
+        <div class="k-modal-content">
+            <span class="k-modal-close"><i class="fa-solid fa-xmark"></i></span>
+            <h3 id="modal-task-title" data-i18n="addTask">Ajouter une tâche</h3>
+            <form id="form-task">
+                <input type="hidden" id="task-id">
+                <input type="hidden" id="task-column-id">
+                <div class="form-group">
+                    <label for="task-title" data-i18n="title">Titre</label>
+                    <input type="text" id="task-title" required data-i18n-placeholder="taskTitlePlaceholder" placeholder="Ex: Faire des recherches">
+                </div>
+                <div class="form-group">
+                    <label for="task-description" data-i18n="description">Description</label>
+                    <textarea id="task-description" rows="3" data-i18n-placeholder="taskDescPlaceholder" placeholder="Détails de la tâche..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="task-priority" data-i18n="priority">Priorité</label>
+                    <select id="task-priority">
+                        <option value="low" data-i18n="priorityLow">Basse</option>
+                        <option value="medium" selected data-i18n="priorityMedium">Moyenne</option>
+                        <option value="high" data-i18n="priorityHigh">Haute</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-assignee" data-i18n="assignee">Assigné à</label>
+                    <input type="text" id="task-assignee" data-i18n-placeholder="assigneePlaceholder" placeholder="Nom de l'élève">
+                </div>
+                <button type="submit" class="btn btn-primary" data-i18n="save">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Code de partage en bas à droite -->
+    <div class="k-share-code-fixed">
+        <span data-i18n="shareCode">Code de partage :</span>
+        <code id="share-code">-</code>
+        <button id="btn-copy-code" class="btn btn-small" aria-label="Copier le code de partage" title="Copier le code de partage"><i class="fa-regular fa-clipboard"></i></button>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="k-toast" id="toast"></div>
+
+    <footer>
+        <div class="date">
+            <p>Réalisé avec <span class="heart">&#10084;&#xFE0E;</span> par <a class="footer-author-link" href="https://yann-houry.netlify.app" target="_blank" rel="noopener noreferrer">Yann Houry</a>, responsable de l'innovation à l'institut Florimont de Genève</p>
+            <nav class="footer-nav">
+                <a href="qrcode.html">QR Code</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="video.html">Vidéo</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="gifs.html">GIF</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="signature.html">Signature</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="captures.html">Captures</a>
+            </nav>
+            <p class="footer-support">
+                <span>Soutenez <span class="footer-brand-name">Ralentir travaux</span> en faisant </span>
+                <a class="footer-support-link" href="https://paypal.me/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Faire un don sur PayPal">
+                    un don sur <i class="fa-brands fa-paypal" aria-hidden="true"></i>
+                </a>
+                <span> ou en </span>
+                <a class="footer-support-link" href="https://www.buymeacoffee.com/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Offrir un café via Buy Me a Coffee">
+                    m'offrant un <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                </a>
+                <span>.</span>
+            </p>
+
+            <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></p>
+
+            <span class="annee">2026</span>
+        </div>
+    </footer>
+
+    <script type="module" src="js/kanban-firebase.js"></script>
+
+    <script src="js/kanban-i18n.js"></script>
+    <script src="js/kanban.js"></script>
+    <script src="js/menu.js"></script>
+</body>
+</html>

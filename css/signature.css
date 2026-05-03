@@ -1,0 +1,305 @@
+/* ==========================================================================
+   Signature Generator
+   ========================================================================== */
+
+.sig-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    max-width: 72rem;
+    width: 100%;
+    padding: var(--spacing-md);
+}
+
+@media (max-width: 48rem) {
+    .sig-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+}
+
+/* Sections */
+.sig-form-section,
+.sig-preview-section {
+    background: var(--bg-section);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 2px 5px var(--shadow-color);
+    padding: var(--spacing-xl);
+}
+
+.sig-form-section h2,
+.sig-preview-section h2 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+    text-align: left;
+}
+
+/* Form fields */
+.sig-field-group {
+    margin-bottom: var(--spacing-md);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+}
+
+.sig-field-group.visible,
+.sig-field-group.first {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.sig-field-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.sig-field-group label i {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    width: 1rem;
+    text-align: center;
+}
+
+.sig-field-group input {
+    width: 100%;
+    padding: 0.7rem 0;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    color: var(--text-primary);
+    border: none;
+    border-bottom: 1.5px solid var(--border-color);
+    background: transparent;
+    outline: none;
+    transition: border-color var(--transition-normal);
+}
+
+.sig-field-group input:focus {
+    border-bottom-color: var(--color-primary);
+}
+
+.sig-field-group input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Copy button */
+.sig-btn-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: var(--spacing-xl);
+    padding: 0.75rem 2rem;
+    font-size: 0.78rem;
+    font-family: var(--font-family);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    background: transparent;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.35s ease;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+}
+
+.sig-btn-copy i {
+    font-size: 0.85rem;
+    transition: transform 0.3s ease;
+}
+
+.sig-btn-copy.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.35s ease, color 0.35s ease, background 0.35s ease;
+}
+
+.sig-btn-copy:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: rgba(6, 182, 212, 0.06);
+}
+
+.sig-btn-copy:hover i {
+    transform: translateY(-1px);
+}
+
+.sig-btn-copy:active {
+    transform: scale(0.98);
+}
+
+.sig-btn-copy.copied {
+    border-color: #4a7c59;
+    color: #4a7c59;
+    background: rgba(74, 124, 89, 0.06);
+}
+
+/* Preview */
+.sig-preview-card {
+    position: relative;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xl);
+    padding-bottom: calc(var(--spacing-xl) + 2rem);
+    min-height: 200px;
+    font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-primary);
+}
+
+.sig-preview-copy {
+    position: absolute;
+    right: 0.6rem;
+    bottom: 0.6rem;
+    width: 1.65rem;
+    height: 1.65rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 44, 119, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.82);
+    color: rgba(0, 44, 119, 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.sig-preview-copy.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.sig-preview-copy:hover,
+.sig-preview-copy:focus-visible {
+    color: #002c77;
+    border-color: rgba(0, 44, 119, 0.28);
+    background: rgba(255, 255, 255, 0.96);
+}
+
+.sig-preview-copy:focus-visible {
+    outline: 2px solid rgba(0, 44, 119, 0.22);
+    outline-offset: 2px;
+}
+
+.sig-preview-copy.copied {
+    color: #4a7c59;
+    border-color: rgba(74, 124, 89, 0.28);
+}
+
+.sig-preview-card .sig-greeting {
+    color: var(--text-primary);
+    margin-bottom: 1em;
+}
+
+.sig-preview-card .sig-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.sig-preview-card .sig-title {
+    color: var(--text-secondary);
+}
+
+.sig-preview-card .sig-address {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.sig-preview-card .sig-phone {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.sig-preview-card .sig-email,
+.sig-preview-card .sig-web {
+    font-size: 12px;
+}
+
+.sig-preview-card .sig-email a,
+.sig-preview-card .sig-web a {
+    color: #002c77;
+    text-decoration: underline;
+}
+
+.sig-preview-card .sig-image {
+    margin-top: 1em;
+}
+
+.sig-preview-card .sig-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.sig-preview-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+
+/* Instructions */
+.sig-instructions {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.sig-instructions.visible {
+    opacity: 1;
+}
+
+.sig-instructions strong {
+    color: var(--text-primary);
+}
+
+/* Logo in header area */
+.sig-logo-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.sig-logo-header img {
+    height: 50px;
+    opacity: 0.9;
+}
+
+.sig-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    letter-spacing: 0.05em;
+}

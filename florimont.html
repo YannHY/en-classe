@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code - Florimont</title>
+    <link rel="icon" href="images/florimont-f.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/florimont.css">
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon is-hidden">🌙</span>
+    </button>
+
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="school-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/>
+                    </svg>
+                    Édition Florimont
+                </div>
+                <div class="logo-wrapper">
+                    <img src="images/florimont-logo-ecole.png" alt="Logo école" id="schoolLogo">
+                </div>
+                <h1>Générateur QR Code</h1>
+                <p>Créez un QR code aux couleurs de Florimont</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Lien à encoder</label>
+                <input type="text" class="form-input" id="urlInput" placeholder="https://example.com">
+            </div>
+
+            <button class="btn btn-primary" id="generateBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+                </svg>
+                Générer le QR Code
+            </button>
+
+            <div class="qr-output" id="qrOutput">
+                <div class="qr-frame">
+                    <canvas id="qrCanvas"></canvas>
+                </div>
+
+                <div class="options-section">
+                    <div class="options-row">
+                        <div class="option-group">
+                            <label class="option-label">Logo</label>
+                            <div class="option-buttons">
+                                <button class="option-btn active" data-logo="images/florimont-logo-ecole.png">
+                                    <img src="images/florimont-logo-ecole.png" alt="Logo F">
+                                    <span>Logo F</span>
+                                </button>
+                                <button class="option-btn" data-logo="images/florimont-ecusson-florimont.png">
+                                    <img src="images/florimont-ecusson-florimont.png" alt="Écusson">
+                                    <span>Écusson</span>
+                                </button>
+                                <button class="option-btn" data-logo="none">
+                                    <div class="no-logo-icon">✕</div>
+                                    <span>Aucun</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="option-group">
+                            <label class="option-label">Couleur</label>
+                            <div class="option-buttons">
+                                <button class="option-btn active" data-color="#002c77">
+                                    <div class="color-preview color-preview--marine"></div>
+                                    <span>Marine</span>
+                                </button>
+                                <button class="option-btn" data-color="#006eb7">
+                                    <div class="color-preview color-preview--light-blue"></div>
+                                    <span>Bleu clair</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="options-row options-row--spaced">
+                        <div class="option-group">
+                            <label class="option-label">Arrière-plan</label>
+                            <div class="option-buttons">
+                                <button class="option-btn active" data-bg="white">
+                                    <div class="color-preview color-preview--white"></div>
+                                    <span>Blanc</span>
+                                </button>
+                                <button class="option-btn" data-bg="transparent">
+                                    <div class="transparent-preview"></div>
+                                    <span>Transparent</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="download-section">
+                    <div class="filename-group">
+                        <label class="form-label">Nom du fichier</label>
+                        <input type="text" class="form-input" id="filenameInput" value="qrcode" placeholder="qrcode">
+                    </div>
+                    <div class="download-btns">
+                        <button class="btn btn-secondary" data-download-format="png">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            PNG
+                        </button>
+                        <button class="btn btn-secondary" data-download-format="jpeg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            JPEG
+                        </button>
+                        <button class="btn btn-secondary" data-download-format="svg">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            SVG
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="https://www.ralentirtravaux.com/apps/en-classe/qrcode.html" class="back-link">← Aller au générateur complet</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script src="js/florimont.js"></script>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mots Croisés</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #eef2f7;
+      --border: #d8dee8;
+      --text-1: #1e2430;
+      --text-2: #5a6474;
+      --accent: #2f5bea;
+      --accent-soft: #e9efff;
+      --danger: #b42318;
+      --success: #067647;
+      --cell: 42px;
+      --radius: 16px;
+      --shadow: 0 12px 30px rgba(21, 32, 56, .08);
+      font-family: Inter, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(47, 91, 234, .08), transparent 26%),
+        linear-gradient(180deg, #fbfcff, var(--bg));
+      color: var(--text-1);
+      font: 15px/1.5 Inter, system-ui, sans-serif;
+    }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 40px;
+    }
+    .hero {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.02;
+      letter-spacing: -.04em;
+    }
+    .meta {
+      color: var(--text-2);
+      font-size: 13px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(320px, auto) minmax(280px, 360px);
+      gap: 24px;
+      align-items: start;
+    }
+    .card {
+      background: color-mix(in srgb, var(--surface) 92%, white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .board {
+      padding: 20px;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-1);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .12s ease, border-color .18s ease, background .18s ease;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: #bac6db; background: #fafcff; }
+    .btn:active { transform: translateY(0); }
+    .btn--accent { border-color: rgba(47, 91, 234, .28); background: var(--accent-soft); color: var(--accent); }
+    .status {
+      min-height: 22px;
+      color: var(--text-2);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .status.is-error { color: var(--danger); }
+    .status.is-success { color: var(--success); }
+    .grid-wrap {
+      overflow: auto;
+      padding: 8px;
+      border-radius: 20px;
+      background: #111827;
+    }
+    .grid {
+      display: grid;
+      gap: 1px;
+      width: max-content;
+      background: #111827;
+    }
+    .cell {
+      position: relative;
+      width: var(--cell);
+      height: var(--cell);
+      background: #fff;
+    }
+    .cell.is-block { background: #111827; }
+    .cell.is-active { outline: 2px solid rgba(47, 91, 234, .95); outline-offset: -2px; z-index: 2; }
+    .cell.is-word { background: #eef3ff; }
+    .cell.is-correct input { color: var(--success); }
+    .cell.is-wrong input { color: var(--danger); }
+    .cell-num {
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      font-size: 9px;
+      line-height: 1;
+      color: #6b7280;
+      pointer-events: none;
+    }
+    .cell-input {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      padding: 0;
+      text-align: center;
+      font: 700 22px/1 Inter, system-ui, sans-serif;
+      text-transform: uppercase;
+      color: #111827;
+      background: transparent;
+      outline: none;
+      caret-color: transparent;
+    }
+    .sidebar {
+      padding: 20px;
+      position: sticky;
+      top: 16px;
+    }
+    .sidebar h2 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-2);
+      margin: 0 0 12px;
+    }
+    .clue-section + .clue-section { margin-top: 22px; }
+    .clue-list {
+      display: grid;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .clue-btn {
+      width: 100%;
+      text-align: left;
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: 12px;
+      padding: 8px 10px;
+      font: inherit;
+      color: var(--text-1);
+      cursor: pointer;
+      transition: background .16s ease, border-color .16s ease, transform .12s ease;
+    }
+    .clue-btn:hover { background: #f7f9fc; border-color: var(--border); transform: translateX(1px); }
+    .clue-btn.is-active { background: var(--accent-soft); border-color: rgba(47, 91, 234, .22); }
+    .clue-num {
+      display: inline-block;
+      min-width: 24px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .legend {
+      margin-top: 18px;
+      color: var(--text-2);
+      font-size: 13px;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .hero { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <h1>Mots Croisés</h1>
+        <div class="meta">Grille interactive exportée le 11/03/2026 21:03:29</div>
+      </div>
+    </header>
+
+    <section class="layout">
+      <div class="card board">
+        <div class="toolbar">
+          <button class="btn btn--accent" type="button" id="checkBtn">Vérifier</button>
+          <button class="btn" type="button" id="clearBtn">Réinitialiser</button>
+          <button class="btn" type="button" id="revealBtn">Révéler la solution</button>
+        </div>
+        <div class="status" id="status">Cliquez sur une définition ou une case pour commencer.</div>
+        <div class="grid-wrap">
+          <div class="grid" id="grid" aria-label="Grille de mots croisés"></div>
+        </div>
+      </div>
+
+      <aside class="card sidebar">
+        <section class="clue-section">
+          <h2>Horizontalement</h2>
+          <ol class="clue-list" id="cluesH"></ol>
+        </section>
+        <section class="clue-section">
+          <h2>Verticalement</h2>
+          <ol class="clue-list" id="cluesV"></ol>
+        </section>
+        <p class="legend">Astuce: utilisez les flèches du clavier pour naviguer et cliquez une deuxième fois sur une case croisée pour changer de direction.</p>
+      </aside>
+    </section>
+  </main>
+
+  <script id="crossword-data" type="application/json">{"slug":"mots-croises-20260311-210329","title":"Mots Croisés","generatedAt":"2026-03-11T20:03:29.233Z","rows":13,"cols":14,"cells":[{"key":"0-3","row":0,"col":3,"solution":"F","number":1,"across":null,"down":"V-1"},{"key":"1-3","row":1,"col":3,"solution":"U","number":null,"across":null,"down":"V-1"},{"key":"1-8","row":1,"col":8,"solution":"D","number":2,"across":null,"down":"V-2"},{"key":"2-1","row":2,"col":1,"solution":"B","number":3,"across":"H-3","down":null},{"key":"2-2","row":2,"col":2,"solution":"R","number":null,"across":"H-3","down":null},{"key":"2-3","row":2,"col":3,"solution":"I","number":null,"across":"H-3","down":"V-1"},{"key":"2-4","row":2,"col":4,"solution":"L","number":null,"across":"H-3","down":null},{"key":"2-5","row":2,"col":5,"solution":"L","number":null,"across":"H-3","down":null},{"key":"2-6","row":2,"col":6,"solution":"E","number":null,"across":"H-3","down":null},{"key":"2-7","row":2,"col":7,"solution":"R","number":null,"across":"H-3","down":null},{"key":"2-8","row":2,"col":8,"solution":"O","number":null,"across":"H-3","down":"V-2"},{"key":"2-9","row":2,"col":9,"solution":"N","number":null,"across":"H-3","down":null},{"key":"2-10","row":2,"col":10,"solution":"T","number":null,"across":"H-3","down":null},{"key":"3-3","row":3,"col":3,"solution":"R","number":null,"across":null,"down":"V-1"},{"key":"3-8","row":3,"col":8,"solution":"R","number":null,"across":null,"down":"V-2"},{"key":"4-3","row":4,"col":3,"solution":"O","number":null,"across":null,"down":"V-1"},{"key":"4-5","row":4,"col":5,"solution":"S","number":4,"across":null,"down":"V-4"},{"key":"4-8","row":4,"col":8,"solution":"M","number":null,"across":null,"down":"V-2"},{"key":"5-0","row":5,"col":0,"solution":"C","number":5,"across":"H-5","down":null},{"key":"5-1","row":5,"col":1,"solution":"H","number":null,"across":"H-5","down":null},{"key":"5-2","row":5,"col":2,"solution":"A","number":null,"across":"H-5","down":null},{"key":"5-3","row":5,"col":3,"solution":"N","number":null,"across":"H-5","down":"V-1"},{"key":"5-4","row":5,"col":4,"solution":"T","number":null,"across":"H-5","down":null},{"key":"5-5","row":5,"col":5,"solution":"E","number":null,"across":"H-5","down":"V-4"},{"key":"5-6","row":5,"col":6,"solution":"R","number":null,"across":"H-5","down":null},{"key":"5-7","row":5,"col":7,"solution":"A","number":null,"across":"H-5","down":null},{"key":"5-8","row":5,"col":8,"solution":"I","number":null,"across":"H-5","down":"V-2"},{"key":"6-3","row":6,"col":3,"solution":"T","number":null,"across":null,"down":"V-1"},{"key":"6-5","row":6,"col":5,"solution":"R","number":null,"across":null,"down":"V-4"},{"key":"6-8","row":6,"col":8,"solution":"R","number":6,"across":"H-6","down":"V-2"},{"key":"6-9","row":6,"col":9,"solution":"E","number":null,"across":"H-6","down":null},{"key":"6-10","row":6,"col":10,"solution":"V","number":7,"across":"H-6","down":"V-7"},{"key":"6-11","row":6,"col":11,"solution":"E","number":null,"across":"H-6","down":null},{"key":"6-12","row":6,"col":12,"solution":"R","number":null,"across":"H-6","down":null},{"key":"6-13","row":6,"col":13,"solution":"A","number":null,"across":"H-6","down":null},{"key":"7-5","row":7,"col":5,"solution":"A","number":null,"across":null,"down":"V-4"},{"key":"7-8","row":7,"col":8,"solution":"A","number":null,"across":null,"down":"V-2"},{"key":"7-10","row":7,"col":10,"solution":"E","number":null,"across":null,"down":"V-7"},{"key":"8-2","row":8,"col":2,"solution":"I","number":8,"across":"H-8","down":null},{"key":"8-3","row":8,"col":3,"solution":"R","number":null,"across":"H-8","down":null},{"key":"8-4","row":8,"col":4,"solution":"A","number":null,"across":"H-8","down":null},{"key":"8-5","row":8,"col":5,"solution":"I","number":null,"across":"H-8","down":"V-4"},{"key":"8-10","row":8,"col":10,"solution":"R","number":null,"across":null,"down":"V-7"},{"key":"9-6","row":9,"col":6,"solution":"T","number":9,"across":"H-9","down":null},{"key":"9-7","row":9,"col":7,"solution":"I","number":null,"across":"H-9","down":null},{"key":"9-8","row":9,"col":8,"solution":"R","number":null,"across":"H-9","down":null},{"key":"9-9","row":9,"col":9,"solution":"E","number":null,"across":"H-9","down":null},{"key":"9-10","row":9,"col":10,"solution":"R","number":null,"across":"H-9","down":"V-7"},{"key":"9-11","row":9,"col":11,"solution":"A","number":null,"across":"H-9","down":null},{"key":"10-10","row":10,"col":10,"solution":"O","number":null,"across":null,"down":"V-7"},{"key":"11-10","row":11,"col":10,"solution":"N","number":null,"across":null,"down":"V-7"},{"key":"12-10","row":12,"col":10,"solution":"T","number":null,"across":null,"down":"V-7"}],"clues":{"H":[{"id":"H-3","number":3,"clue":"BRILLER - 3e personne du pluriel (Les étoiles ... dans le ciel d'automne.)","answer":"BRILLERONT","row":2,"col":1,"length":10,"cells":["2-1","2-2","2-3","2-4","2-5","2-6","2-7","2-8","2-9","2-10"]},{"id":"H-5","number":5,"clue":"CHANTER - 1re personne du singulier (Je ... en marchant sur la route.)","answer":"CHANTERAI","row":5,"col":0,"length":9,"cells":["5-0","5-1","5-2","5-3","5-4","5-5","5-6","5-7","5-8"]},{"id":"H-6","number":6,"clue":"RÊVER - 3e personne du singulier (Le poète ... sous les étoiles.)","answer":"REVERA","row":6,"col":8,"length":6,"cells":["6-8","6-9","6-10","6-11","6-12","6-13"]},{"id":"H-8","number":8,"clue":"ALLER - 1re personne du singulier (Je ... les mains dans les poches crevées.)","answer":"IRAI","row":8,"col":2,"length":4,"cells":["8-2","8-3","8-4","8-5"]},{"id":"H-9","number":9,"clue":"TIRER - 3e personne du singulier (L'élastique de mon soulier ... sur mon talon.)","answer":"TIRERA","row":9,"col":6,"length":6,"cells":["9-6","9-7","9-8","9-9","9-10","9-11"]}],"V":[{"id":"V-1","number":1,"clue":"FUIR - 3e personne du pluriel (Les nuages ... dans le vent.)","answer":"FUIRONT","row":0,"col":3,"length":7,"cells":["0-3","1-3","2-3","3-3","4-3","5-3","6-3"]},{"id":"V-2","number":2,"clue":"DORMIR - 3e personne du singulier (Il ... sous le ciel étoilé.)","answer":"DORMIRA","row":1,"col":8,"length":7,"cells":["1-8","2-8","3-8","4-8","5-8","6-8","7-8"]},{"id":"V-4","number":4,"clue":"ÊTRE - 1re personne du singulier (Je ... un poète vagabond.)","answer":"SERAI","row":4,"col":5,"length":5,"cells":["4-5","5-5","6-5","7-5","8-5"]},{"id":"V-7","number":7,"clue":"VOIR - 3e personne du pluriel (Ses yeux ... les petites étoiles.)","answer":"VERRONT","row":6,"col":10,"length":7,"cells":["6-10","7-10","8-10","9-10","10-10","11-10","12-10"]}]}}</script>
+  <script>
+    (() => {
+      const data = JSON.parse(document.getElementById('crossword-data').textContent);
+      const gridEl = document.getElementById('grid');
+      const cluesH = document.getElementById('cluesH');
+      const cluesV = document.getElementById('cluesV');
+      const statusEl = document.getElementById('status');
+      const cellMap = new Map(data.cells.map(cell => [cell.key, cell]));
+      const inputMap = new Map();
+      const clueMap = new Map();
+      let activeWordId = data.clues.H[0]?.id || data.clues.V[0]?.id || null;
+      let activeDir = activeWordId ? activeWordId[0] : 'H';
+
+      gridEl.style.gridTemplateColumns = 'repeat(' + data.cols + ', var(--cell))';
+
+      const setStatus = (message, tone = '') => {
+        statusEl.textContent = message;
+        statusEl.className = 'status' + (tone ? ' is-' + tone : '');
+      };
+
+      const wordsById = new Map([...data.clues.H, ...data.clues.V].map(word => [word.id, word]));
+
+      const renderGrid = () => {
+        for (let row = 0; row < data.rows; row++) {
+          for (let col = 0; col < data.cols; col++) {
+            const key = row + '-' + col;
+            const cell = cellMap.get(key);
+            const cellEl = document.createElement('div');
+            cellEl.className = 'cell' + (cell ? '' : ' is-block');
+            cellEl.dataset.key = key;
+
+            if (!cell) {
+              gridEl.appendChild(cellEl);
+              continue;
+            }
+
+            if (cell.number) {
+              const numberEl = document.createElement('span');
+              numberEl.className = 'cell-num';
+              numberEl.textContent = cell.number;
+              cellEl.appendChild(numberEl);
+            }
+
+            const input = document.createElement('input');
+            input.className = 'cell-input';
+            input.maxLength = 1;
+            input.autocomplete = 'off';
+            input.autocapitalize = 'characters';
+            input.spellcheck = false;
+            input.setAttribute('aria-label', 'Case ' + (row + 1) + ',' + (col + 1));
+            input.dataset.key = key;
+            input.addEventListener('focus', () => {
+              const preferred = activeDir === 'V' ? cell.down || cell.across : cell.across || cell.down;
+              activeWordId = preferred || cell.across || cell.down;
+              activeDir = activeWordId ? activeWordId[0] : activeDir;
+              highlight();
+            });
+            input.addEventListener('click', () => {
+              if (cell.across && cell.down) {
+                const next = activeDir === 'H' ? cell.down : cell.across;
+                activeWordId = next;
+                activeDir = activeWordId[0];
+              } else {
+                activeWordId = cell.across || cell.down;
+                activeDir = activeWordId ? activeWordId[0] : activeDir;
+              }
+              highlight();
+            });
+            input.addEventListener('input', e => {
+              e.target.value = (e.target.value || '').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 1);
+              clearEvaluationState();
+              moveToNext(key);
+            });
+            input.addEventListener('keydown', e => {
+              if (e.key === 'Backspace' && !e.target.value) {
+                e.preventDefault();
+                moveToPrev(key);
+                return;
+              }
+              if (e.key === 'ArrowRight') { e.preventDefault(); moveByOffset(key, 0, 1, 'H'); }
+              if (e.key === 'ArrowLeft')  { e.preventDefault(); moveByOffset(key, 0, -1, 'H'); }
+              if (e.key === 'ArrowDown')  { e.preventDefault(); moveByOffset(key, 1, 0, 'V'); }
+              if (e.key === 'ArrowUp')    { e.preventDefault(); moveByOffset(key, -1, 0, 'V'); }
+            });
+            cellEl.appendChild(input);
+            inputMap.set(key, input);
+            gridEl.appendChild(cellEl);
+          }
+        }
+      };
+
+      const renderClues = (dir, container) => {
+        data.clues[dir].forEach(word => {
+          const item = document.createElement('li');
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'clue-btn';
+          button.innerHTML = '<span class="clue-num">' + word.number + '.</span> ' + escapeHtml(word.clue);
+          button.addEventListener('click', () => {
+            activeWordId = word.id;
+            activeDir = dir;
+            highlight();
+            focusCell(word.cells[0]);
+          });
+          clueMap.set(word.id, button);
+          item.appendChild(button);
+          container.appendChild(item);
+        });
+      };
+
+      const escapeHtml = value => String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+
+      const clearEvaluationState = () => {
+        gridEl.querySelectorAll('.cell').forEach(cell => {
+          cell.classList.remove('is-correct', 'is-wrong');
+        });
+        if (statusEl.classList.contains('is-error') || statusEl.classList.contains('is-success')) {
+          setStatus('Continuez la grille.');
+        }
+      };
+
+      const focusCell = key => {
+        const input = inputMap.get(key);
+        if (input) input.focus();
+      };
+
+      const moveByOffset = (key, dRow, dCol, dir) => {
+        activeDir = dir;
+        const cell = cellMap.get(key);
+        if (!cell) return;
+        let row = cell.row + dRow;
+        let col = cell.col + dCol;
+        while (row >= 0 && row < data.rows && col >= 0 && col < data.cols) {
+          const nextKey = row + '-' + col;
+          if (inputMap.has(nextKey)) {
+            focusCell(nextKey);
+            return;
+          }
+          row += dRow;
+          col += dCol;
+        }
+      };
+
+      const moveWithinWord = (key, step) => {
+        const word = wordsById.get(activeWordId);
+        if (!word) return;
+        const index = word.cells.indexOf(key);
+        const nextKey = word.cells[index + step];
+        if (nextKey) focusCell(nextKey);
+      };
+
+      const moveToNext = key => moveWithinWord(key, 1);
+      const moveToPrev = key => moveWithinWord(key, -1);
+
+      const highlight = () => {
+        gridEl.querySelectorAll('.cell').forEach(cell => {
+          cell.classList.remove('is-active', 'is-word');
+        });
+        clueMap.forEach(button => button.classList.remove('is-active'));
+
+        const word = wordsById.get(activeWordId);
+        if (!word) return;
+
+        word.cells.forEach(key => {
+          const cellEl = gridEl.querySelector('.cell[data-key="' + key + '"]');
+          if (cellEl) cellEl.classList.add('is-word');
+        });
+        const focused = document.activeElement?.dataset?.key;
+        if (focused && word.cells.includes(focused)) {
+          const activeCell = gridEl.querySelector('.cell[data-key="' + focused + '"]');
+          if (activeCell) activeCell.classList.add('is-active');
+        } else {
+          const firstCell = gridEl.querySelector('.cell[data-key="' + word.cells[0] + '"]');
+          if (firstCell) firstCell.classList.add('is-active');
+        }
+        const clueBtn = clueMap.get(word.id);
+        if (clueBtn) clueBtn.classList.add('is-active');
+      };
+
+      const evaluate = () => {
+        let filled = 0;
+        let correct = 0;
+        data.cells.forEach(cell => {
+          const input = inputMap.get(cell.key);
+          const cellEl = input?.parentElement;
+          if (!input || !cellEl) return;
+          cellEl.classList.remove('is-correct', 'is-wrong');
+          if (!input.value) return;
+          filled++;
+          if (input.value === cell.solution) {
+            correct++;
+            cellEl.classList.add('is-correct');
+          } else {
+            cellEl.classList.add('is-wrong');
+          }
+        });
+
+        if (!filled) {
+          setStatus('Remplissez au moins une case avant de vérifier.', 'error');
+          return;
+        }
+        if (correct === data.cells.length && filled === data.cells.length) {
+          setStatus('Grille complète et correcte.', 'success');
+          return;
+        }
+        setStatus(correct + ' case' + (correct > 1 ? 's' : '') + ' correcte' + (correct > 1 ? 's' : '') + ' sur ' + data.cells.length + '.', 'error');
+      };
+
+      document.getElementById('checkBtn').addEventListener('click', evaluate);
+      document.getElementById('clearBtn').addEventListener('click', () => {
+        inputMap.forEach(input => { input.value = ''; });
+        clearEvaluationState();
+        setStatus('Grille réinitialisée.');
+        const firstWord = wordsById.get(activeWordId) || data.clues.H[0] || data.clues.V[0];
+        if (firstWord) focusCell(firstWord.cells[0]);
+      });
+      document.getElementById('revealBtn').addEventListener('click', () => {
+        data.cells.forEach(cell => {
+          const input = inputMap.get(cell.key);
+          if (input) input.value = cell.solution;
+        });
+        clearEvaluationState();
+        setStatus('Solution affichée.', 'success');
+      });
+
+      renderGrid();
+      renderClues('H', cluesH);
+      renderClues('V', cluesV);
+      highlight();
+      const firstWord = wordsById.get(activeWordId) || data.clues.H[0] || data.clues.V[0];
+      if (firstWord) focusCell(firstWord.cells[0]);
+    })();
+  </script>
+</body>
+</html>

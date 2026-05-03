@@ -1,0 +1,209 @@
+/* ==========================================================================
+   Captures - Frame Builder
+   ========================================================================== */
+
+.cap-container {
+    width: 100%;
+    max-width: 72rem;
+    padding: var(--spacing-md);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+}
+
+@media (max-width: 48rem) {
+    .cap-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cap-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    letter-spacing: 0.05em;
+}
+
+/* Panels */
+.cap-panel {
+    background: var(--bg-section);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 2px 5px var(--shadow-color);
+    padding: var(--spacing-xl);
+}
+
+.cap-panel h2 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+    text-align: left;
+}
+
+/* Controls */
+.cap-controls {
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+.cap-row {
+    display: grid;
+    gap: var(--spacing-xs);
+}
+
+.cap-row.cap-split {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    align-items: end;
+}
+
+.cap-row.cap-split > div {
+    display: grid;
+    gap: var(--spacing-xs);
+}
+
+.cap-row.cap-split.cap-bg-padding-row {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+}
+
+@media (max-width: 48rem) {
+    .cap-row.cap-split {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 32rem) {
+    .cap-row.cap-split.cap-bg-padding-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cap-row label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.cap-row select,
+.cap-row input[type="file"],
+.cap-row input[type="color"] {
+    width: 100%;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.56rem 0.65rem;
+    background: var(--bg-input);
+    color: var(--text-primary);
+    transition: border-color var(--transition-normal);
+}
+
+.cap-row input[type="color"] {
+    min-height: 2.75rem;
+    padding: 0.2rem;
+    cursor: pointer;
+}
+
+.cap-row input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.cap-row input[type="color"]::-webkit-color-swatch,
+.cap-row input[type="color"]::-moz-color-swatch {
+    border: none;
+    border-radius: calc(var(--radius-md) - 2px);
+}
+
+.cap-row select:focus,
+.cap-row input[type="file"]:focus,
+.cap-row input[type="color"]:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+.cap-row input[type="range"] {
+    width: 100%;
+    accent-color: var(--color-primary);
+}
+
+.cap-row input[type="checkbox"] {
+    accent-color: var(--color-primary);
+    width: auto;
+    justify-self: start;
+    transform: scale(1.2);
+}
+
+.cap-row output {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.cap-auto-detect {
+    display: grid;
+    gap: var(--spacing-xs);
+}
+
+.cap-hidden {
+    display: none !important;
+}
+
+/* Download button */
+.cap-actions {
+    display: flex;
+    margin-top: var(--spacing-sm);
+}
+
+.cap-actions button {
+    width: 100%;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 0.7rem 1rem;
+    font-family: var(--font-family);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #fff;
+    background: var(--color-primary);
+    cursor: pointer;
+    transition: background var(--transition-fast), transform 140ms ease, opacity 140ms ease;
+}
+
+.cap-actions button:hover:enabled {
+    background: var(--color-primary-hover);
+    transform: translateY(-1px);
+}
+
+.cap-actions button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* Status */
+.cap-status {
+    margin: var(--spacing-sm) 0 0;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+
+/* Preview */
+.cap-preview {
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+.cap-preview canvas {
+    width: 100%;
+    min-height: 260px;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--border-color);
+    background: var(--bg-input);
+}

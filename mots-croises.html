@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mots Croisés</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:opsz,wght@14..32,300..600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/mots-croises.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="js/theme.js"></script>
+</head>
+<body>
+    <nav class="main-nav" aria-label="Navigation principale">
+        <div class="main-nav-bar">
+            <button
+                id="mainMenuToggle"
+                class="main-nav-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="mainMenuPanel"
+                aria-label="Ouvrir le menu"
+                title="Menu"
+            >
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="main-nav-panel" id="mainMenuPanel">
+            <a href="https://www.ralentirtravaux.com" class="main-nav-link main-nav-link-home" title="Retour à l'accueil" aria-label="Accueil">
+                <i class="fas fa-house" aria-hidden="true"></i>
+            </a>
+            <a href="index.html" class="main-nav-link">
+                <i class="fas fa-chalkboard" aria-hidden="true"></i>
+                <span>En classe</span>
+            </a>
+            <a href="notes.html" class="main-nav-link">
+                <i class="fas fa-pen-to-square" aria-hidden="true"></i>
+                <span>Notes</span>
+            </a>
+            <a href="groupes.html" class="main-nav-link">
+                <i class="fas fa-users" aria-hidden="true"></i>
+                <span>Groupes</span>
+            </a>
+            <a href="kanban.html" class="main-nav-link">
+                <i class="fas fa-table-columns" aria-hidden="true"></i>
+                <span>Kanban</span>
+            </a>
+            <a href="mots-croises.html" class="main-nav-link main-nav-link-active" aria-current="page">
+                <i class="fas fa-table-cells" aria-hidden="true"></i>
+                <span>Mots croisés</span>
+            </a>
+            <a href="boutons.html" class="main-nav-link">
+                <i class="fas fa-toggle-on" aria-hidden="true"></i>
+                <span>Boutons</span>
+            </a>
+            <a href="lecture.html" class="main-nav-link">
+                <i class="fas fa-book-open" aria-hidden="true"></i>
+                <span>Lecture</span>
+            </a>
+            <button type="button" id="themeToggle" class="theme-toggle" aria-label="Activer le mode sombre" title="Activer le mode sombre"><i class="fas fa-moon" aria-hidden="true"></i></button>
+        </div>
+    </nav>
+
+    <h1 class="site-title"><i class="fas fa-table-cells"></i> Mots Croisés</h1>
+
+  <div class="mc-app">
+
+  <main class="app-layout">
+
+    <!-- Panneau gauche : saisie -->
+    <aside class="panel panel--input">
+
+      <section class="section section--import">
+        <h2 class="section-title">Importer une liste</h2>
+        <p class="section-copy">
+          Formats acceptés : .md, .txt et .csv.
+        </p>
+        <button class="btn btn--outline btn--full import-trigger" id="importBtn" type="button">
+          Importer
+        </button>
+        <div class="import-cli-help">
+          <p class="import-cli-help-title">
+            <i class="fa-solid fa-laptop-code" aria-hidden="true"></i>
+            CLI
+          </p>
+          <p class="import-cli-help-copy">
+            Vous pouvez aussi publier une grille depuis le Terminal avec le CLI.
+          </p>
+          <a href="aide-cli-mots-croises.html" class="import-help-link">Voir l’aide CLI</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">Ajouter un mot</h2>
+        <form id="wordForm" class="word-form" novalidate>
+
+          <div class="field">
+            <label class="label" for="wordInput">Mot</label>
+            <input
+              class="input"
+              type="text"
+              id="wordInput"
+              placeholder="ex. FLORIMONT"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="characters"
+              spellcheck="false"
+            >
+          </div>
+
+          <div class="field">
+            <label class="label" for="clueInput">Définition</label>
+            <input
+              class="input"
+              type="text"
+              id="clueInput"
+              placeholder="ex. École genevoise renommée"
+              autocomplete="off"
+            >
+          </div>
+
+          <div class="field">
+            <label class="label">Direction</label>
+            <div class="seg-control" role="group" aria-label="Direction du mot" data-active-dir="H">
+              <button type="button" class="seg-btn is-active" data-dir="H" aria-pressed="true">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                  <path d="M1 6.5h11M8.5 3.5l3 3-3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Horizontal
+              </button>
+              <button type="button" class="seg-btn" data-dir="V" aria-pressed="false">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                  <path d="M6.5 1v11M3.5 8.5l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Vertical
+              </button>
+            </div>
+          </div>
+
+          <button class="btn btn--outline btn--full" type="submit">
+            Ajouter
+          </button>
+
+        </form>
+      </section>
+
+      <section class="section">
+        <header class="list-header">
+          <h2 class="section-title">
+            Mots
+            <span class="badge" id="wordCount">0</span>
+          </h2>
+          <button class="btn btn--ghost btn--sm" id="clearAllBtn" type="button" hidden>
+            Effacer tout
+          </button>
+        </header>
+        <ul class="word-list" id="wordList" aria-live="polite">
+          <li class="word-list-empty" id="emptyMsg">Aucun mot pour l'instant</li>
+        </ul>
+      </section>
+
+      <div class="generate-wrap">
+        <button class="btn btn--generate" id="generateBtn" type="button" disabled>
+          Générer la grille
+        </button>
+      </div>
+
+    </aside>
+
+    <!-- Panneau droit : prévisualisation -->
+    <section class="panel panel--preview">
+
+      <header class="preview-header">
+        <h2 class="section-title">Grille</h2>
+        <div class="preview-actions" id="previewActions" hidden>
+          <label class="toggle">
+            <input type="checkbox" id="solutionToggle" role="switch" class="toggle-input">
+            <span class="toggle-track" aria-hidden="true"></span>
+            <span class="toggle-label">Solution</span>
+          </label>
+          <div class="bg-color-control">
+            <label for="gridBgColor" class="bg-color-label">Fond grille</label>
+            <input
+              type="color"
+              id="gridBgColor"
+              class="bg-color-input"
+              value="#18181b"
+              aria-label="Couleur de l'arrière-plan de la grille"
+              title="Choisir la couleur d'arrière-plan de la grille"
+            >
+          </div>
+          <div class="export-btns">
+            <button class="btn btn--outline btn--sm" id="publishOnline" type="button">
+              <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+              Publier
+            </button>
+            <button class="btn btn--outline btn--sm" id="exportHTML" type="button">
+              <i class="fa-solid fa-code" aria-hidden="true"></i>
+              HTML
+            </button>
+            <button class="btn btn--outline btn--sm" id="exportPNG" type="button">
+              <i class="fa-solid fa-image" aria-hidden="true"></i>
+              PNG
+            </button>
+            <button class="btn btn--outline btn--sm" id="printBtn" type="button">
+              <i class="fa-solid fa-print" aria-hidden="true"></i>
+              Imprimer
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="published-link" id="publishedLink" hidden>
+        <span class="published-link-label">En ligne :</span>
+        <a class="published-link-url" id="publishedLinkUrl" href="#" target="_blank" rel="noopener"></a>
+        <button class="btn btn--outline btn--sm" id="copyPublishedLink" type="button" aria-label="Copier le lien" title="Copier le lien">
+          <i class="fa-solid fa-copy" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="canvas-wrap" id="canvasWrap">
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon" aria-hidden="true">&#x229E;</div>
+          <p>Ajoutez des mots<br>et générez la grille</p>
+        </div>
+        <canvas id="crosswordCanvas" class="crossword-canvas" hidden></canvas>
+      </div>
+
+      <div class="clues-container" id="cluesContainer" hidden>
+        <div class="clues-grid">
+          <div class="clues-col">
+            <h3 class="clues-heading">Horizontalement</h3>
+            <ol class="clues-list" id="hCluesList"></ol>
+          </div>
+          <div class="clues-col">
+            <h3 class="clues-heading">Verticalement</h3>
+            <ol class="clues-list" id="vCluesList"></ol>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <div class="mc-toast" id="toast" role="alert" aria-live="assertive"></div>
+
+  <!-- Modal import -->
+  <dialog class="import-dialog" id="importDialog" aria-labelledby="importDialogTitle">
+    <div class="import-dialog-inner">
+
+      <header class="import-dialog-header">
+        <h2 class="import-dialog-title" id="importDialogTitle">Importer des mots</h2>
+        <button class="dialog-close" id="importDialogClose" type="button" aria-label="Fermer">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Zone de dépôt fichier -->
+      <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Zone de dépôt de fichier">
+        <input type="file" id="fileInput" accept=".txt,.md,.csv" class="file-input-hidden" aria-hidden="true">
+        <div class="drop-zone-icon" aria-hidden="true">&uarr;</div>
+        <p class="drop-zone-text">
+          Glissez un fichier ici<br>
+          <span class="drop-zone-hint">.txt &nbsp;·&nbsp; .md &nbsp;·&nbsp; .csv</span>
+        </p>
+        <button class="btn btn--outline btn--sm" id="browseBtn" type="button">Parcourir</button>
+      </div>
+
+      <div class="import-or"><span>ou</span></div>
+
+      <!-- Zone de collage -->
+      <div class="field">
+        <label class="label" for="pasteArea">Collez votre liste</label>
+        <textarea
+          class="input import-textarea"
+          id="pasteArea"
+          placeholder="FLORIMONT, H, École genevoise&#10;ROMAN, V, Récit de fiction&#10;&#10;— ou —&#10;&#10;# Horizontal&#10;LECTURE: Action de lire&#10;&#10;# Vertical&#10;POEME: Texte en vers"
+          rows="7"
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <!-- Aide formats -->
+      <details class="format-help">
+        <summary class="format-help-summary">Formats acceptés</summary>
+        <div class="format-help-body">
+          <div class="format-example">
+            <span class="format-tag">CSV</span>
+            <code>MOT, H, Définition</code>
+          </div>
+          <div class="format-example">
+            <span class="format-tag">Texte</span>
+            <code>H MOT: Définition</code>
+          </div>
+          <div class="format-example">
+            <span class="format-tag">Sections</span>
+            <code># Horizontal / # Vertical</code>
+          </div>
+          <div class="format-example">
+            <span class="format-tag">Simple</span>
+            <code>MOT (un mot par ligne)</code>
+          </div>
+        </div>
+      </details>
+
+      <!-- Preview + actions -->
+      <div class="import-preview" id="importPreview" hidden>
+        <p class="import-preview-count" id="importPreviewCount"></p>
+      </div>
+
+      <footer class="import-dialog-footer">
+        <button class="btn btn--ghost" id="importCancelBtn" type="button">Annuler</button>
+        <div style="display:flex;gap:8px;align-items:center">
+          <label class="toggle" style="font-size:13px">
+            <input type="checkbox" id="importReplaceToggle" role="switch" class="toggle-input">
+            <span class="toggle-track" aria-hidden="true"></span>
+            <span class="toggle-label">Remplacer</span>
+          </label>
+          <button class="btn btn--primary" id="importConfirmBtn" type="button" disabled>
+            Importer
+          </button>
+        </div>
+      </footer>
+
+    </div>
+  </dialog>
+
+  </div><!-- /.mc-app -->
+
+    <footer>
+        <div class="date">
+            <p>Réalisé avec <span class="heart">&#x2764;&#xFE0E;</span> par <a class="footer-author-link" href="https://yann-houry.netlify.app" target="_blank" rel="noopener noreferrer">Yann Houry</a>, responsable de l'innovation à l'institut Florimont de Genève</p>
+            <nav class="footer-nav">
+                <a href="qrcode.html">QR Code</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="video.html">Vidéo</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="gifs.html">GIF</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="signature.html">Signature</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="captures.html">Captures</a>
+            </nav>
+            <p class="footer-support">
+                <span>Soutenez <span class="footer-brand-name">Ralentir travaux</span> en faisant </span>
+                <a class="footer-support-link" href="https://paypal.me/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Faire un don sur PayPal">
+                    un don sur <i class="fa-brands fa-paypal" aria-hidden="true"></i>
+                </a>
+                <span> ou en </span>
+                <a class="footer-support-link" href="https://www.buymeacoffee.com/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Offrir un café via Buy Me a Coffee">
+                    m'offrant un <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                </a>
+                <span>.</span>
+            </p>
+
+            <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+            <span class="annee">2026</span></div>
+    </footer>
+
+    <script src="js/menu.js"></script>
+    <script src="js/mots-croises.js"></script>
+</body>
+</html>

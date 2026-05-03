@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aide - Lecture facile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/lecture.css">
+    <link rel="stylesheet" href="css/help.css">
+    <script src="js/theme.js"></script>
+</head>
+<body>
+    <nav class="main-nav" aria-label="Navigation principale">
+        <div class="main-nav-bar">
+            <button
+                id="mainMenuToggle"
+                class="main-nav-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="mainMenuPanel"
+                aria-label="Ouvrir le menu"
+                title="Menu"
+            >
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="main-nav-panel" id="mainMenuPanel">
+            <a href="https://www.ralentirtravaux.com" class="main-nav-link main-nav-link-home" title="Retour à l'accueil" aria-label="Accueil">
+                <i class="fas fa-house" aria-hidden="true"></i>
+            </a>
+            <a href="index.html" class="main-nav-link">
+                <i class="fas fa-chalkboard" aria-hidden="true"></i>
+                <span>En classe</span>
+            </a>
+            <a href="notes.html" class="main-nav-link">
+                <i class="fas fa-pen-to-square" aria-hidden="true"></i>
+                <span>Notes</span>
+            </a>
+            <a href="groupes.html" class="main-nav-link">
+                <i class="fas fa-users" aria-hidden="true"></i>
+                <span>Groupes</span>
+            </a>
+            <a href="kanban.html" class="main-nav-link">
+                <i class="fas fa-table-columns" aria-hidden="true"></i>
+                <span>Kanban</span>
+            </a>
+            <a href="mots-croises.html" class="main-nav-link">
+                <i class="fas fa-table-cells" aria-hidden="true"></i>
+                <span>Mots croisés</span>
+            </a>
+            <a href="boutons.html" class="main-nav-link">
+                <i class="fas fa-toggle-on" aria-hidden="true"></i>
+                <span>Boutons</span>
+            </a>
+            <a href="lecture.html" class="main-nav-link main-nav-link-active" aria-current="page">
+                <i class="fas fa-book-open" aria-hidden="true"></i>
+                <span>Lecture</span>
+            </a>
+            <button type="button" id="themeToggle" class="theme-toggle" aria-label="Activer le mode sombre" title="Activer le mode sombre"><i class="fas fa-moon" aria-hidden="true"></i></button>
+        </div>
+    </nav>
+
+    <h1 class="site-title"><i class="fas fa-book-open"></i> Lecture facile</h1>
+
+    <div class="help-container">
+        <p class="help-header-subtitle">Guide des fonctionnalités</p>
+
+        <a href="lecture.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Retour à l'application
+        </a>
+
+        <!-- Section: Éditeur de texte -->
+        <section class="help-section">
+            <div class="help-section-header">
+                <div class="help-section-icon">
+                    <i class="fas fa-pen-to-square"></i>
+                </div>
+                <h2>Éditeur de texte</h2>
+            </div>
+            <div class="help-items">
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-pen-to-square"></i></div>
+                    <div class="help-item-content">
+                        <h3>Zone de texte</h3>
+                        <p>Colle ou écris directement ton texte dans la zone de saisie. Le compteur de caractères se met à jour en temps réel.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-copy"></i></div>
+                    <div class="help-item-content">
+                        <h3>Copier</h3>
+                        <p>Copie le contenu de la zone de texte dans le presse-papiers.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-share-nodes"></i></div>
+                    <div class="help-item-content">
+                        <h3>Partager</h3>
+                        <p>Génère un lien de partage contenant ton texte et tous tes réglages. Idéal pour envoyer un texte déjà mis en forme à quelqu'un.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-trash-alt"></i></div>
+                    <div class="help-item-content">
+                        <h3>Effacer</h3>
+                        <p>Supprime tout le contenu de la zone de texte.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Formatage du texte -->
+        <section class="help-section">
+            <div class="help-section-header">
+                <div class="help-section-icon">
+                    <i class="fas fa-bold"></i>
+                </div>
+                <h2>Formatage du texte</h2>
+            </div>
+            <div class="help-items">
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-mouse-pointer"></i></div>
+                    <div class="help-item-content">
+                        <h3>Barre de formatage</h3>
+                        <p>Sélectionne du texte pour faire apparaître la barre de formatage. Elle te permet de mettre en forme ton texte rapidement.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-bold"></i></div>
+                    <div class="help-item-content">
+                        <h3>Gras, Italique, Souligné</h3>
+                        <p>Applique une mise en forme au texte sélectionné. Raccourcis : <span class="kbd">Ctrl+B</span> <span class="kbd">Ctrl+I</span> <span class="kbd">Ctrl+U</span></p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-text-height"></i></div>
+                    <div class="help-item-content">
+                        <h3>Titre</h3>
+                        <p>Transforme le texte sélectionné en titre mis en évidence.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-list-ul"></i></div>
+                    <div class="help-item-content">
+                        <h3>Listes</h3>
+                        <p>Crée une liste à puces ou une liste numérotée à partir du texte sélectionné.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-palette"></i></div>
+                    <div class="help-item-content">
+                        <h3>Couleur du texte</h3>
+                        <p>Change la couleur du texte sélectionné grâce au sélecteur de couleurs.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-eraser"></i></div>
+                    <div class="help-item-content">
+                        <h3>Effacer le formatage</h3>
+                        <p>Supprime toute la mise en forme du texte sélectionné pour revenir au style par défaut.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-rotate-left"></i></div>
+                    <div class="help-item-content">
+                        <h3>Annuler / Rétablir</h3>
+                        <p>Annule ou rétablit la dernière action. Raccourcis : <span class="kbd">Ctrl+Z</span> / <span class="kbd">Ctrl+Y</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Lecture audio -->
+        <section class="help-section">
+            <div class="help-section-header">
+                <div class="help-section-icon">
+                    <i class="fas fa-volume-high"></i>
+                </div>
+                <h2>Lecture audio</h2>
+            </div>
+            <div class="help-items">
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-play"></i></div>
+                    <div class="help-item-content">
+                        <h3>Lecture / Pause</h3>
+                        <p>Lance la synthèse vocale de ton texte. Appuie à nouveau pour mettre en pause ou reprendre la lecture.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-stop"></i></div>
+                    <div class="help-item-content">
+                        <h3>Arrêter</h3>
+                        <p>Arrête complètement la lecture audio et revient au début.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-gauge-high"></i></div>
+                    <div class="help-item-content">
+                        <h3>Vitesse</h3>
+                        <p>Ajuste la vitesse de lecture de 0,5x (lente) à 2x (rapide). La valeur par défaut est 1x.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-globe"></i></div>
+                    <div class="help-item-content">
+                        <h3>Langue</h3>
+                        <p>Sélectionne la langue de la voix parmi 7 langues disponibles : français, anglais (US/UK), espagnol, allemand, italien et portugais. Ce réglage concerne la lecture audio.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Typographie -->
+        <section class="help-section">
+            <div class="help-section-header">
+                <div class="help-section-icon">
+                    <i class="fas fa-font"></i>
+                </div>
+                <h2>Typographie</h2>
+            </div>
+            <div class="help-items">
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-text-height"></i></div>
+                    <div class="help-item-content">
+                        <h3>Police</h3>
+                        <p>Choisis parmi 9 polices dont OpenDyslexic (conçue pour les dyslexiques) et Luciole (conçue pour les malvoyants).</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-up-right-and-down-left-from-center"></i></div>
+                    <div class="help-item-content">
+                        <h3>Taille</h3>
+                        <p>Ajuste la taille du texte de 12px à 48px pour un meilleur confort de lecture.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-text-width"></i></div>
+                    <div class="help-item-content">
+                        <h3>Espacement des lettres</h3>
+                        <p>Augmente l'espace entre chaque lettre (de 0 à 10px). Un espacement plus grand aide à distinguer les lettres similaires.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-arrows-up-down"></i></div>
+                    <div class="help-item-content">
+                        <h3>Interligne</h3>
+                        <p>Contrôle l'espace entre les lignes de texte (de 1 à 3). Un interligne plus grand facilite le suivi des lignes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Couleurs -->
+        <section class="help-section">
+            <div class="help-section-header">
+                <div class="help-section-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h2>Couleurs</h2>
+            </div>
+            <div class="help-items">
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-palette"></i></div>
+                    <div class="help-item-content">
+                        <h3>Couleur du texte et du fond</h3>
+                        <p>Personnalise la couleur du texte et de l'arrière-plan avec les sélecteurs de couleurs.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-swatchbook"></i></div>
+                    <div class="help-item-content">
+                        <h3>Thèmes recommandés</h3>
+                        <p>5 thèmes de couleurs prédéfinis optimisés pour le confort visuel :</p>
+                        <div class="color-samples">
+                            <span class="color-sample color-sample--cream" title="Crème">Aa</span>
+                            <span class="color-sample color-sample--light-blue" title="Bleu clair">Aa</span>
+                            <span class="color-sample color-sample--light-green" title="Vert clair">Aa</span>
+                            <span class="color-sample color-sample--lavender" title="Lavande">Aa</span>
+                            <span class="color-sample color-sample--dark" title="Sombre">Aa</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-moon"></i></div>
+                    <div class="help-item-content">
+                        <h3>Mode sombre</h3>
+                        <p>Active le mode sombre global via le bouton dans le menu. Réduit la fatigue oculaire dans les environnements peu éclairés.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Accessibilité -->
+        <section class="help-section">
+            <div class="help-section-header">
+                <div class="help-section-icon">
+                    <i class="fas fa-universal-access"></i>
+                </div>
+                <h2>Accessibilité</h2>
+            </div>
+            <div class="help-items">
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-bold"></i></div>
+                    <div class="help-item-content">
+                        <h3>Lecture bionique</h3>
+                        <p>Met en gras le début de chaque mot pour guider l'œil et accélérer la lecture. Le cerveau complète automatiquement la fin des mots.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-highlighter"></i></div>
+                    <div class="help-item-content">
+                        <h3>Surligner les lignes</h3>
+                        <p>Alterne les couleurs de fond entre les lignes de texte. Aide à ne pas perdre sa ligne pendant la lecture.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-ruler-horizontal"></i></div>
+                    <div class="help-item-content">
+                        <h3>Règle de lecture</h3>
+                        <p>Affiche une bande horizontale qui suit la souris pour isoler la ligne en cours de lecture. Les zones au-dessus et en dessous sont assombries.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-book"></i></div>
+                    <div class="help-item-content">
+                        <h3>Définitions</h3>
+                        <p>Clique sur un mot pour voir sa définition. La langue du mot est détectée automatiquement et la définition est recherchée dans le Wiktionnaire approprié : français, anglais, espagnol, allemand, italien ou portugais.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-expand"></i></div>
+                    <div class="help-item-content">
+                        <h3>Mode concentration</h3>
+                        <p>Ouvre le texte en plein écran sans distraction. La règle de lecture est disponible dans ce mode. Appuie sur <span class="kbd">Échap</span> pour quitter.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Préférences -->
+        <section class="help-section">
+            <div class="help-section-header">
+                <div class="help-section-icon">
+                    <i class="fas fa-gear"></i>
+                </div>
+                <h2>Préférences</h2>
+            </div>
+            <div class="help-items">
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-bookmark"></i></div>
+                    <div class="help-item-content">
+                        <h3>Sauvegarder</h3>
+                        <p>Enregistre tous tes réglages actuels (police, taille, couleurs, options d'accessibilité). Ils seront restaurés automatiquement à ta prochaine visite.</p>
+                    </div>
+                </div>
+                <div class="help-item">
+                    <div class="help-item-icon"><i class="fas fa-rotate-left"></i></div>
+                    <div class="help-item-content">
+                        <h3>Réinitialiser</h3>
+                        <p>Remet tous les réglages à leurs valeurs par défaut (police Arial, taille 18px, fond crème).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="help-tip">
+                <i class="fas fa-lightbulb"></i>
+                <p>Tes préférences sont sauvegardées localement dans ton navigateur. Elles ne sont pas partagées avec d'autres appareils.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="date">
+            <p>Réalisé avec <span class="heart">&#10084;&#xFE0E;</span> par <a class="footer-author-link" href="https://yann-houry.netlify.app" target="_blank" rel="noopener noreferrer">Yann Houry</a>, responsable de l'innovation à l'institut Florimont de Genève</p>
+            <nav class="footer-nav">
+                <a href="qrcode.html">QR Code</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="video.html">Vidéo</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="gifs.html">GIF</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="signature.html">Signature</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="captures.html">Captures</a>
+            </nav>
+            <p class="footer-support">
+                <span>Soutenez <span class="footer-brand-name">Ralentir travaux</span> en faisant </span>
+                <a class="footer-support-link" href="https://paypal.me/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Faire un don sur PayPal">
+                    un don sur <i class="fa-brands fa-paypal" aria-hidden="true"></i>
+                </a>
+                <span> ou en </span>
+                <a class="footer-support-link" href="https://www.buymeacoffee.com/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Offrir un café via Buy Me a Coffee">
+                    m'offrant un <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                </a>
+                <span>.</span>
+            </p>
+
+            <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></p>
+
+            <span class="annee">2026</span>
+        </div>
+    </footer>
+
+    <script src="js/menu.js"></script>
+</body>
+</html>

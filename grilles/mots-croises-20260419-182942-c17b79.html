@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mots Croisés</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #eef2f7;
+      --border: #d8dee8;
+      --text-1: #1e2430;
+      --text-2: #5a6474;
+      --accent: #2f5bea;
+      --accent-soft: #e9efff;
+      --danger: #b42318;
+      --success: #067647;
+      --block: #18181b;
+      --cell: 42px;
+      --radius: 16px;
+      --shadow: 0 12px 30px rgba(21, 32, 56, .08);
+      font-family: Inter, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(47, 91, 234, .08), transparent 26%),
+        linear-gradient(180deg, #fbfcff, var(--bg));
+      color: var(--text-1);
+      font: 15px/1.5 Inter, system-ui, sans-serif;
+    }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 40px;
+    }
+    .hero {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.02;
+      letter-spacing: -.04em;
+    }
+    .meta {
+      color: var(--text-2);
+      font-size: 13px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(320px, auto) minmax(280px, 360px);
+      gap: 24px;
+      align-items: start;
+    }
+    .card {
+      background: color-mix(in srgb, var(--surface) 92%, white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .board {
+      padding: 20px;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-1);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .12s ease, border-color .18s ease, background .18s ease;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: #bac6db; background: #fafcff; }
+    .btn:active { transform: translateY(0); }
+    .btn--accent { border-color: rgba(47, 91, 234, .28); background: var(--accent-soft); color: var(--accent); }
+    .status {
+      min-height: 22px;
+      color: var(--text-2);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .status.is-error { color: var(--danger); }
+    .status.is-success { color: var(--success); }
+    .grid-wrap {
+      overflow: auto;
+      padding: 8px;
+      border-radius: 20px;
+      background: var(--block);
+    }
+    .grid {
+      display: grid;
+      gap: 1px;
+      width: max-content;
+      background: var(--block);
+    }
+    .cell {
+      position: relative;
+      width: var(--cell);
+      height: var(--cell);
+      background: #fff;
+    }
+    .cell.is-block { background: var(--block); }
+    .cell.is-active { outline: 2px solid rgba(47, 91, 234, .95); outline-offset: -2px; z-index: 2; }
+    .cell.is-word { background: #eef3ff; }
+    .cell.is-correct input { color: var(--success); }
+    .cell.is-wrong input { color: var(--danger); }
+    .cell-num {
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      font-size: 9px;
+      line-height: 1;
+      color: #6b7280;
+      pointer-events: none;
+    }
+    .cell-input {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      padding: 0;
+      text-align: center;
+      font: 700 22px/1 Inter, system-ui, sans-serif;
+      text-transform: uppercase;
+      color: #111827;
+      background: transparent;
+      outline: none;
+      caret-color: transparent;
+    }
+    .sidebar {
+      padding: 20px;
+      position: sticky;
+      top: 16px;
+    }
+    .sidebar h2 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-2);
+      margin: 0 0 12px;
+    }
+    .clue-section + .clue-section { margin-top: 22px; }
+    .clue-list {
+      display: grid;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .clue-btn {
+      width: 100%;
+      text-align: left;
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: 12px;
+      padding: 8px 10px;
+      font: inherit;
+      color: var(--text-1);
+      cursor: pointer;
+      transition: background .16s ease, border-color .16s ease, transform .12s ease;
+    }
+    .clue-btn:hover { background: #f7f9fc; border-color: var(--border); transform: translateX(1px); }
+    .clue-btn.is-active { background: var(--accent-soft); border-color: rgba(47, 91, 234, .22); }
+    .clue-num {
+      display: inline-block;
+      min-width: 24px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .legend {
+      margin-top: 18px;
+      color: var(--text-2);
+      font-size: 13px;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .hero { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <h1>Mots Croisés</h1>
+        <div class="meta">Grille interactive exportée le 19/04/2026 20:29</div>
+      </div>
+    </header>
+
+    <section class="layout">
+      <div class="card board">
+        <div class="toolbar">
+          <button class="btn btn--accent" type="button" id="checkBtn">Vérifier</button>
+          <button class="btn" type="button" id="clearBtn">Réinitialiser</button>
+          <button class="btn" type="button" id="revealBtn">Révéler la solution</button>
+        </div>
+        <div class="status" id="status">Cliquez sur une définition ou une case pour commencer.</div>
+        <div class="grid-wrap">
+          <div class="grid" id="grid" aria-label="Grille de mots croisés"></div>
+        </div>
+      </div>
+
+      <aside class="card sidebar">
+        <section class="clue-section">
+          <h2>Horizontalement</h2>
+          <ol class="clue-list" id="cluesH"></ol>
+        </section>
+        <section class="clue-section">
+          <h2>Verticalement</h2>
+          <ol class="clue-list" id="cluesV"></ol>
+        </section>
+        <p class="legend">Astuce: utilisez les flèches du clavier pour naviguer et cliquez une deuxième fois sur une case croisée pour changer de direction.</p>
+      </aside>
+    </section>
+  </main>
+
+  <div hidden id="crossword-data" data-crossword-src="mots-croises-20260419-182942-c17b79.json"></div>
+  <script src="../js/crossword-player.js"></script>
+</body>
+</html>

@@ -1,0 +1,1469 @@
+/* ===== Luciole Font (self-hosted) ===== */
+@font-face {
+  font-family: 'Luciole';
+  src: url('../lecture-fonts/Luciole-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Luciole';
+  src: url('../lecture-fonts/Luciole-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Luciole';
+  src: url('../lecture-fonts/Luciole-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Luciole';
+  src: url('../lecture-fonts/Luciole-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ===== CSS Variables & App Container ===== */
+.lf-app {
+  --lf-primary: #06b6d4;
+  --lf-primary-light: #22d3ee;
+  --lf-primary-dark: #0891b2;
+  --lf-secondary: #06b6d4;
+  --lf-success: #06b6d4;
+  --lf-danger: #ef4444;
+
+  --lf-bg-primary: #f8fafc;
+  --lf-bg-secondary: #ffffff;
+  --lf-bg-tertiary: #f1f5f9;
+
+  --lf-text-primary: #1e293b;
+  --lf-text-secondary: #64748b;
+  --lf-text-muted: #94a3b8;
+
+  --lf-border-light: #e2e8f0;
+  --lf-border-medium: #cbd5e1;
+
+  --lf-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --lf-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --lf-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --lf-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  --lf-radius-sm: 0.375rem;
+  --lf-radius-md: 0.5rem;
+  --lf-radius-lg: 0.75rem;
+  --lf-radius-xl: 1rem;
+  --lf-radius-2xl: 1.5rem;
+
+  --lf-transition-fast: 150ms ease;
+  --lf-transition-base: 250ms ease;
+  --lf-transition-slow: 350ms ease;
+
+  --lf-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* App container styles */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  width: 100%;
+  font-family: var(--lf-font-sans);
+  color: var(--lf-text-primary);
+  line-height: 1.6;
+}
+
+/* ===== Dark Mode ===== */
+body.dark-mode .lf-app {
+  --lf-bg-primary: #0f172a;
+  --lf-bg-secondary: #1e293b;
+  --lf-bg-tertiary: #334155;
+
+  --lf-text-primary: #f1f5f9;
+  --lf-text-secondary: #94a3b8;
+  --lf-text-muted: #64748b;
+
+  --lf-border-light: #334155;
+  --lf-border-medium: #475569;
+
+  --lf-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --lf-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --lf-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --lf-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+}
+
+/* Variables for elements outside .lf-app (position: fixed overlays) */
+.lf-focus-overlay,
+.lf-definition-popup,
+.lf-toast-container {
+  --lf-primary: #06b6d4;
+  --lf-primary-light: #22d3ee;
+  --lf-primary-dark: #0891b2;
+  --lf-success: #06b6d4;
+  --lf-danger: #ef4444;
+  --lf-bg-primary: #f8fafc;
+  --lf-bg-secondary: #ffffff;
+  --lf-bg-tertiary: #f1f5f9;
+  --lf-text-primary: #1e293b;
+  --lf-text-secondary: #64748b;
+  --lf-text-muted: #94a3b8;
+  --lf-border-light: #e2e8f0;
+  --lf-border-medium: #cbd5e1;
+  --lf-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --lf-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --lf-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --lf-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --lf-radius-sm: 0.375rem;
+  --lf-radius-md: 0.5rem;
+  --lf-radius-lg: 0.75rem;
+  --lf-radius-xl: 1rem;
+  --lf-radius-2xl: 1.5rem;
+  --lf-transition-fast: 150ms ease;
+  --lf-transition-base: 250ms ease;
+  --lf-transition-slow: 350ms ease;
+  --lf-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--lf-font-sans);
+}
+
+body.dark-mode .lf-focus-overlay,
+body.dark-mode .lf-definition-popup,
+body.dark-mode .lf-toast-container {
+  --lf-bg-primary: #0f172a;
+  --lf-bg-secondary: #1e293b;
+  --lf-bg-tertiary: #334155;
+  --lf-text-primary: #f1f5f9;
+  --lf-text-secondary: #94a3b8;
+  --lf-text-muted: #64748b;
+  --lf-border-light: #334155;
+  --lf-border-medium: #475569;
+  --lf-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --lf-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --lf-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --lf-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+}
+
+/* ===== Introduction Card (Collapsible) ===== */
+.lf-app .intro-card {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border-radius: var(--lf-radius-2xl);
+  padding: 0;
+  margin-bottom: 2.5rem;
+  box-shadow: var(--lf-shadow-md);
+  border: 1px solid #a5f3fc;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lf-app .intro-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--lf-shadow-lg);
+}
+
+body.dark-mode .lf-app .intro-card {
+  background: linear-gradient(135deg, #164e63 0%, #0e7490 100%);
+  border-color: #0891b2;
+}
+
+.lf-app .intro-summary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: background var(--lf-transition-fast);
+}
+
+.lf-app .intro-summary::-webkit-details-marker {
+  display: none;
+}
+
+.lf-app .intro-summary:hover {
+  background: rgba(6, 182, 212, 0.1);
+}
+
+.lf-app .intro-summary h2 {
+  flex: 1;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0e7490;
+  margin: 0;
+}
+
+body.dark-mode .lf-app .intro-summary h2 {
+  color: #67e8f9;
+}
+
+.lf-app .intro-chevron {
+  color: #0e7490;
+  font-size: 0.875rem;
+  transition: transform var(--lf-transition-base);
+}
+
+body.dark-mode .lf-app .intro-chevron {
+  color: #67e8f9;
+}
+
+.lf-app .intro-card[open] .intro-chevron {
+  transform: rotate(180deg);
+}
+
+.lf-app .intro-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, var(--lf-primary) 0%, var(--lf-primary-dark) 100%);
+  border-radius: var(--lf-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.lf-app .intro-content {
+  padding: 0 1.5rem 1.25rem 4.5rem;
+  animation: lf-slideDown 0.2s ease-out;
+  text-align: left;
+}
+
+@keyframes lf-slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lf-app .intro-content p {
+  color: #155e75;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+body.dark-mode .lf-app .intro-content p {
+  color: #a5f3fc;
+}
+
+.lf-app .help-link-wrapper {
+  margin-top: 0.75rem !important;
+}
+
+.lf-app .help-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #155e75;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition: opacity var(--lf-transition-fast);
+  opacity: 0.7;
+}
+
+.lf-app .help-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+body.dark-mode .lf-app .help-link {
+  color: white;
+}
+
+body.dark-mode .lf-app .help-link:hover {
+  color: white;
+}
+
+/* ===== Main Content ===== */
+.lf-app .main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ===== Editor Section ===== */
+.lf-app .editor-section {
+  background: var(--lf-bg-secondary);
+  border-radius: var(--lf-radius-2xl);
+  padding: 1.5rem;
+  box-shadow: var(--lf-shadow-md);
+  border: 1px solid var(--lf-border-light);
+}
+
+.lf-app .section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.lf-app .section-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, var(--lf-primary-light) 0%, var(--lf-primary) 100%);
+  border-radius: var(--lf-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+}
+
+.lf-app .section-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--lf-text-primary);
+  flex: 1;
+}
+
+.lf-app .character-count {
+  font-size: 0.8125rem;
+  color: var(--lf-text-muted);
+  background: var(--lf-bg-tertiary);
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--lf-radius-md);
+}
+
+.lf-app .editor-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lf-app .editable-text-wrapper {
+  position: relative;
+  overflow: clip;
+  border-radius: var(--lf-radius-xl);
+  resize: vertical;
+  min-height: 200px;
+  max-height: 800px;
+}
+
+.lf-app .editable-text {
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  max-height: inherit;
+  padding: 1.25rem;
+  border: 2px solid var(--lf-border-light);
+  border-radius: var(--lf-radius-xl);
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--lf-text-primary);
+  background: #fffbeb;
+  overflow-y: auto;
+  transition: border-color var(--lf-transition-base), box-shadow var(--lf-transition-base);
+  outline: none;
+  resize: none;
+}
+
+.lf-app .editable-text:focus {
+  border-color: var(--lf-primary);
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1);
+}
+
+.lf-app .editable-text:empty::before {
+  content: attr(placeholder);
+  color: var(--lf-text-muted);
+  pointer-events: none;
+}
+
+/* Text formatting styles inside editable area */
+.lf-app .editable-text h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0.5em 0 0.3em 0;
+  color: var(--lf-primary-dark);
+}
+
+.lf-app .editable-text ul,
+.lf-app .editable-text ol {
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
+
+.lf-app .editable-text li {
+  margin: 0.25em 0;
+}
+
+.lf-app .editable-text b,
+.lf-app .editable-text strong {
+  font-weight: 700;
+}
+
+.lf-app .editable-text i,
+.lf-app .editable-text em {
+  font-style: italic;
+}
+
+.lf-app .editable-text u {
+  text-decoration: underline;
+}
+
+/* Inline heading style (for selected text, not full block) */
+.lf-app .editable-text .inline-heading {
+  font-size: 1.4em;
+  font-weight: 700;
+  color: var(--lf-primary-dark);
+}
+
+body.dark-mode .lf-app .editable-text h2 {
+  color: var(--lf-primary-light);
+}
+
+body.dark-mode .lf-app .editable-text .inline-heading {
+  color: var(--lf-primary-light);
+}
+
+.lf-app .editor-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.lf-app .toolbar-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--lf-border-light);
+  background: var(--lf-bg-secondary);
+  color: var(--lf-text-secondary);
+  border-radius: var(--lf-radius-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--lf-transition-fast);
+  font-size: 0.875rem;
+}
+
+.lf-app .toolbar-btn:hover {
+  background: var(--lf-primary);
+  color: white;
+  border-color: var(--lf-primary);
+}
+
+.lf-app .toolbar-btn .toolbar-label {
+  margin-left: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.lf-app .toolbar-btn {
+  width: auto;
+  padding: 0.5rem 0.875rem;
+}
+
+.lf-app .toolbar-btn--icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  flex: 0 0 auto;
+}
+
+/* ===== Format Toolbar (inline with main toolbar) ===== */
+.lf-app .format-toolbar {
+  display: none;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto;
+}
+
+.lf-app .format-toolbar.visible {
+  display: flex;
+}
+
+.lf-app .format-separator {
+  width: 1px;
+  height: 1.5rem;
+  background: var(--lf-border-light);
+  margin: 0 0.5rem;
+}
+
+.lf-app .format-btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--lf-border-light);
+  background: var(--lf-bg-secondary);
+  color: var(--lf-text-secondary);
+  border-radius: var(--lf-radius-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--lf-transition-fast);
+  font-size: 0.875rem;
+}
+
+.lf-app .format-btn:hover {
+  background: var(--lf-primary);
+  color: white;
+  border-color: var(--lf-primary);
+}
+
+.lf-app .format-btn.active {
+  background: var(--lf-primary);
+  color: white;
+  border-color: var(--lf-primary);
+}
+
+body.dark-mode .lf-app .format-btn {
+  background: var(--lf-bg-tertiary);
+  border-color: var(--lf-border-medium);
+}
+
+body.dark-mode .lf-app .format-btn:hover {
+  background: var(--lf-primary);
+  border-color: var(--lf-primary);
+}
+
+/* Color picker in floating toolbar */
+.lf-app .color-picker-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.lf-app .color-picker-container input[type="color"] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+}
+
+.lf-app .color-btn {
+  position: relative;
+}
+
+.lf-app .color-indicator {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 3px;
+  background: #000000;
+  border-radius: 2px;
+}
+
+/* ===== Controls Grid ===== */
+.lf-app .controls-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 1200px) {
+  .lf-app .controls-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .lf-app .controls-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Control Cards ===== */
+.lf-app .control-card {
+  background: var(--lf-bg-secondary);
+  border-radius: var(--lf-radius-2xl);
+  padding: 1.25rem;
+  box-shadow: var(--lf-shadow-md);
+  border: 1px solid var(--lf-border-light);
+  transition: transform var(--lf-transition-base), box-shadow var(--lf-transition-base);
+  min-width: 0;
+}
+
+.lf-app .control-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--lf-shadow-lg);
+}
+
+.lf-app .card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--lf-border-light);
+}
+
+.lf-app .card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--lf-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+}
+
+.lf-app .speech-icon { background: linear-gradient(135deg, var(--lf-primary) 0%, var(--lf-primary-dark) 100%); }
+.lf-app .typography-icon { background: linear-gradient(135deg, var(--lf-primary) 0%, var(--lf-primary-dark) 100%); }
+.lf-app .colors-icon { background: linear-gradient(135deg, var(--lf-primary) 0%, var(--lf-primary-dark) 100%); }
+.lf-app .accessibility-icon { background: linear-gradient(135deg, var(--lf-primary) 0%, var(--lf-primary-dark) 100%); }
+
+.lf-app .card-header h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--lf-text-primary);
+}
+
+.lf-app .card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ===== Speech Controls ===== */
+.lf-app .speech-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.lf-app .speech-btn {
+  width: 3.5rem;
+  height: 3.5rem;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  transition: all var(--lf-transition-fast);
+  box-shadow: var(--lf-shadow-md);
+}
+
+.lf-app .play-btn {
+  background: linear-gradient(135deg, var(--lf-primary) 0%, var(--lf-primary-dark) 100%);
+  color: white;
+}
+
+.lf-app .play-btn:hover {
+  transform: scale(1.1);
+  box-shadow: var(--lf-shadow-lg);
+}
+
+.lf-app .play-btn:active {
+  transform: scale(0.95);
+}
+
+.lf-app .stop-btn {
+  background: var(--lf-bg-tertiary);
+  color: var(--lf-text-secondary);
+}
+
+.lf-app .stop-btn:hover {
+  background: var(--lf-danger);
+  color: white;
+}
+
+/* ===== Control Groups ===== */
+.lf-app .control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lf-app .control-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--lf-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lf-app .control-group label i {
+  color: var(--lf-primary);
+  font-size: 0.8125rem;
+}
+
+/* ===== Range Inputs ===== */
+.lf-app .range-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lf-app input[type="range"] {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--lf-bg-tertiary);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.lf-app input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, var(--lf-primary) 0%, var(--lf-primary-dark) 100%);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: var(--lf-shadow-md);
+  transition: transform var(--lf-transition-fast);
+}
+
+.lf-app input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.lf-app input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, var(--lf-primary) 0%, var(--lf-primary-dark) 100%);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: var(--lf-shadow-md);
+}
+
+.lf-app .range-value {
+  min-width: 3rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--lf-primary);
+  text-align: right;
+}
+
+/* ===== Select Inputs ===== */
+.lf-app .select-wrapper {
+  position: relative;
+}
+
+.lf-app .select-wrapper select {
+  width: 100%;
+  padding: 0.625rem 2.5rem 0.625rem 0.875rem;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  color: var(--lf-text-primary);
+  background: var(--lf-bg-tertiary);
+  border: 1px solid var(--lf-border-light);
+  border-radius: var(--lf-radius-md);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: all var(--lf-transition-fast);
+}
+
+.lf-app .select-wrapper select:hover {
+  border-color: var(--lf-primary);
+}
+
+.lf-app .select-wrapper select:focus {
+  outline: none;
+  border-color: var(--lf-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.lf-app .select-wrapper i {
+  position: absolute;
+  right: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--lf-text-muted);
+  font-size: 0.75rem;
+  pointer-events: none;
+}
+
+/* ===== Color Controls ===== */
+.lf-app .color-controls {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.lf-app .color-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lf-app .color-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--lf-text-secondary);
+}
+
+.lf-app .color-picker-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.lf-app .color-picker-wrapper input[type="color"] {
+  width: 100%;
+  height: 2.75rem;
+  border: none;
+  border-radius: var(--lf-radius-md);
+  cursor: pointer;
+  padding: 0;
+  background: none;
+}
+
+.lf-app .color-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 3px;
+}
+
+.lf-app .color-picker-wrapper input[type="color"]::-webkit-color-swatch {
+  border: 2px solid var(--lf-border-light);
+  border-radius: var(--lf-radius-sm);
+}
+
+/* ===== Color Presets ===== */
+.lf-app .preset-colors {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--lf-border-light);
+}
+
+.lf-app .preset-label {
+  font-size: 0.8125rem;
+  color: var(--lf-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.lf-app .color-presets {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.lf-app .preset-btn {
+  border: 2px solid var(--lf-border-light);
+  border-radius: var(--lf-radius-md);
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  transition: all var(--lf-transition-fast);
+  overflow: hidden;
+}
+
+.lf-app .preset-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--lf-primary);
+}
+
+.lf-app .preset-sample {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* ===== Toggle Switches ===== */
+.lf-app .toggle-group {
+  padding: 0.25rem 0;
+}
+
+.lf-app .toggle-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  gap: 1rem;
+}
+
+.lf-app .toggle-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--lf-text-primary);
+  font-size: 0.9375rem;
+}
+
+.lf-app .toggle-info i {
+  color: var(--lf-primary);
+  font-size: 0.875rem;
+}
+
+.lf-app .toggle-switch {
+  position: relative;
+  width: 3rem;
+  height: 1.625rem;
+}
+
+.lf-app .toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.lf-app .toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--lf-bg-tertiary);
+  border-radius: 1rem;
+  transition: all var(--lf-transition-base);
+  border: 1px solid var(--lf-border-light);
+}
+
+.lf-app .toggle-slider::before {
+  position: absolute;
+  content: "";
+  height: 1.25rem;
+  width: 1.25rem;
+  left: 0.125rem;
+  bottom: 0.125rem;
+  background: white;
+  border-radius: 50%;
+  transition: all var(--lf-transition-base);
+  box-shadow: var(--lf-shadow-sm);
+}
+
+.lf-app .toggle-switch input:checked + .toggle-slider {
+  background: linear-gradient(135deg, var(--lf-primary) 0%, var(--lf-primary-dark) 100%);
+  border-color: var(--lf-primary-dark);
+}
+
+.lf-app .toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(1.375rem);
+}
+
+/* ===== Focus Mode Button ===== */
+.lf-app .focus-btn {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  background: linear-gradient(135deg, var(--lf-primary) 0%, var(--lf-primary-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--lf-radius-lg);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all var(--lf-transition-fast);
+  box-shadow: var(--lf-shadow-md);
+  margin-top: 0.5rem;
+}
+
+.lf-app .focus-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--lf-shadow-lg);
+}
+
+.lf-app .focus-btn:active {
+  transform: translateY(0);
+}
+
+/* ===== Quick Actions ===== */
+.lf-app .quick-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+}
+
+.lf-app .action-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--lf-radius-lg);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--lf-transition-fast);
+}
+
+.lf-app .reset-btn {
+  background: var(--lf-bg-secondary);
+  color: var(--lf-text-secondary);
+  border: 1px solid var(--lf-border-light);
+}
+
+.lf-app .reset-btn:hover {
+  background: var(--lf-bg-tertiary);
+  color: var(--lf-text-primary);
+  border-color: var(--lf-border-medium);
+}
+
+.lf-app .save-btn {
+  background: linear-gradient(135deg, var(--lf-primary) 0%, var(--lf-primary-dark) 100%);
+  color: white;
+  border: none;
+  box-shadow: var(--lf-shadow-md);
+}
+
+.lf-app .save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--lf-shadow-lg);
+}
+
+/* ===== Focus Mode Overlay ===== */
+.lf-focus-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--lf-bg-primary);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.lf-focus-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.lf-focus-overlay .focus-container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.lf-focus-overlay .exit-focus-btn {
+  align-self: flex-end;
+  margin-bottom: 2rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--lf-bg-secondary);
+  color: var(--lf-text-secondary);
+  border: 1px solid var(--lf-border-light);
+  border-radius: var(--lf-radius-lg);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--lf-transition-fast);
+}
+
+.lf-focus-overlay .exit-focus-btn:hover {
+  background: var(--lf-primary);
+  color: white;
+  border-color: var(--lf-primary);
+}
+
+.lf-focus-overlay .focus-text-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--lf-radius-2xl);
+}
+
+.lf-focus-overlay .focus-text-area {
+  flex: 1;
+  padding: 2rem;
+  background: var(--lf-bg-secondary);
+  border-radius: var(--lf-radius-2xl);
+  box-shadow: var(--lf-shadow-xl);
+  overflow-y: auto;
+  font-size: 1.25rem;
+  line-height: 2;
+}
+
+.lf-focus-overlay .focus-reading-ruler {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2.5rem;
+  background: transparent;
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  pointer-events: none;
+  display: none;
+}
+
+.lf-focus-overlay .focus-reading-ruler::before,
+.lf-focus-overlay .focus-reading-ruler::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.6);
+  pointer-events: none;
+}
+
+.lf-focus-overlay .focus-reading-ruler::before {
+  bottom: 100%;
+  height: 2000px;
+}
+
+.lf-focus-overlay .focus-reading-ruler::after {
+  top: 100%;
+  height: 2000px;
+}
+
+/* ===== Reading Ruler ===== */
+.lf-app .reading-ruler {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2.5rem;
+  background: transparent;
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  pointer-events: none;
+  z-index: 10;
+  display: none;
+}
+
+.lf-app .reading-ruler::before,
+.lf-app .reading-ruler::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.6);
+  pointer-events: none;
+}
+
+.lf-app .reading-ruler::before {
+  bottom: 100%;
+  height: 2000px;
+}
+
+.lf-app .reading-ruler::after {
+  top: 100%;
+  height: 2000px;
+}
+
+.lf-app .reading-ruler.active {
+  display: block;
+}
+
+/* ===== Word Definition Popup ===== */
+.lf-definition-popup {
+  position: absolute;
+  z-index: 100;
+  width: 320px;
+  max-height: 280px;
+  background: var(--lf-bg-secondary);
+  border: 1px solid var(--lf-border-light);
+  border-radius: var(--lf-radius-lg);
+  box-shadow: var(--lf-shadow-xl);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  animation: lf-defPopIn 0.2s ease;
+}
+
+.lf-definition-popup.active {
+  display: flex;
+}
+
+@keyframes lf-defPopIn {
+  from { opacity: 0; transform: translateY(4px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.lf-definition-popup .definition-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--lf-border-light);
+  background: var(--lf-bg-tertiary);
+}
+
+.lf-definition-popup .definition-word {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--lf-primary);
+}
+
+.lf-definition-popup .definition-pos {
+  font-size: 0.8rem;
+  color: var(--lf-text-muted);
+  font-style: italic;
+}
+
+.lf-definition-popup .definition-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--lf-text-muted);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 0.25rem;
+}
+
+.lf-definition-popup .definition-close:hover {
+  color: var(--lf-text-primary);
+}
+
+.lf-definition-popup .definition-body {
+  padding: 0.75rem 1rem;
+  overflow-y: auto;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--lf-text-primary);
+}
+
+.lf-definition-popup .definition-body ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.lf-definition-popup .definition-body li {
+  margin-bottom: 0.35rem;
+}
+
+.lf-definition-popup .definition-body .def-loading {
+  text-align: center;
+  color: var(--lf-text-muted);
+  padding: 1rem 0;
+}
+
+.lf-definition-popup .definition-body .def-error {
+  text-align: center;
+  color: var(--lf-text-muted);
+  padding: 1rem 0;
+}
+
+/* ===== Toast Notifications ===== */
+.lf-toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 1001;
+}
+
+.lf-toast-container .toast {
+  padding: 1rem 1.5rem;
+  background: var(--lf-bg-secondary);
+  border-radius: var(--lf-radius-lg);
+  box-shadow: var(--lf-shadow-xl);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  animation: lf-slideIn 0.3s ease forwards;
+  border-left: 4px solid var(--lf-primary);
+}
+
+.lf-toast-container .toast.success {
+  border-left-color: var(--lf-success);
+}
+
+.lf-toast-container .toast.success i {
+  color: var(--lf-success);
+}
+
+.lf-toast-container .toast.error {
+  border-left-color: var(--lf-danger);
+}
+
+.lf-toast-container .toast.error i {
+  color: var(--lf-danger);
+}
+
+.lf-toast-container .toast i {
+  font-size: 1.125rem;
+  color: var(--lf-primary);
+}
+
+@keyframes lf-slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes lf-slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* ===== Line Highlight Overlay ===== */
+.lf-app .line-highlight-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.lf-app .line-highlight-stripe {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: rgba(6, 182, 212, 0.12);
+}
+
+/* Neutralize margins and enforce font size on elements inserted by contenteditable paste */
+.lf-app .editable-text div,
+.lf-app .editable-text p,
+.lf-app .editable-text br {
+  margin: 0;
+  padding: 0;
+}
+
+.lf-app .editable-text * {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+/* ===== Bionic Reading Styles ===== */
+.lf-app .editable-text strong {
+  font-weight: 700;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  .lf-app .intro-card {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .lf-app .intro-icon {
+    align-self: center;
+  }
+
+  .lf-app .intro-summary h2,
+  .lf-app .intro-content,
+  .lf-app .help-link-wrapper {
+    text-align: left;
+  }
+
+  .lf-app .controls-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lf-app .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .lf-app .section-header h2 {
+    order: -1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .lf-app .section-icon {
+    display: none;
+  }
+
+  .lf-app .character-count {
+    align-self: flex-end;
+  }
+
+  .lf-app .quick-actions {
+    flex-direction: column;
+  }
+
+  .lf-app .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .lf-toast-container {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .lf-toast-container .toast {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .lf-app .speech-controls {
+    gap: 0.75rem;
+  }
+
+  .lf-app .speech-btn {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .lf-app .color-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* ===== Print Styles ===== */
+@media print {
+  .lf-app {
+    max-width: none;
+  }
+
+  .lf-app .control-card,
+  .lf-app .quick-actions,
+  .lf-app .intro-card {
+    display: none;
+  }
+
+  .lf-app .editor-section {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+
+  .lf-app .editable-text {
+    border: none;
+    padding: 0;
+    max-height: none;
+    overflow: visible;
+  }
+}

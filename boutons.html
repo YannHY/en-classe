@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutons</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/boutons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="js/theme.js"></script>
+</head>
+<body>
+    <nav class="main-nav" aria-label="Navigation principale">
+        <div class="main-nav-bar">
+            <button
+                id="mainMenuToggle"
+                class="main-nav-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="mainMenuPanel"
+                aria-label="Ouvrir le menu"
+                title="Menu"
+            >
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="main-nav-panel" id="mainMenuPanel">
+            <a href="https://www.ralentirtravaux.com" class="main-nav-link main-nav-link-home" title="Retour à l'accueil" aria-label="Accueil">
+                <i class="fas fa-house" aria-hidden="true"></i>
+            </a>
+            <a href="index.html" class="main-nav-link">
+                <i class="fas fa-chalkboard" aria-hidden="true"></i>
+                <span>En classe</span>
+            </a>
+            <a href="notes.html" class="main-nav-link">
+                <i class="fas fa-pen-to-square" aria-hidden="true"></i>
+                <span>Notes</span>
+            </a>
+            <a href="groupes.html" class="main-nav-link">
+                <i class="fas fa-users" aria-hidden="true"></i>
+                <span>Groupes</span>
+            </a>
+            <a href="kanban.html" class="main-nav-link">
+                <i class="fas fa-table-columns" aria-hidden="true"></i>
+                <span>Kanban</span>
+            </a>
+            <a href="mots-croises.html" class="main-nav-link">
+                <i class="fas fa-table-cells" aria-hidden="true"></i>
+                <span>Mots croisés</span>
+            </a>
+            <a href="boutons.html" class="main-nav-link main-nav-link-active" aria-current="page">
+                <i class="fas fa-toggle-on" aria-hidden="true"></i>
+                <span>Boutons</span>
+            </a>
+            <a href="lecture.html" class="main-nav-link">
+                <i class="fas fa-book-open" aria-hidden="true"></i>
+                <span>Lecture</span>
+            </a>
+            <button type="button" id="themeToggle" class="theme-toggle" aria-label="Activer le mode sombre" title="Activer le mode sombre"><i class="fas fa-moon" aria-hidden="true"></i></button>
+        </div>
+    </nav>
+
+    <h1 class="site-title"><i class="fas fa-toggle-on"></i> Boutons</h1>
+    <audio id="click-sound" src="boutons-sons/no-dont-do-it.mp3" preload="auto"></audio>
+
+    <main class="buttons-main">
+        <h1 class="button-title"><ion-icon name="thumbs-up-outline" class="icon-up"></ion-icon>Approuvé</h1>
+
+        <details>
+            <summary>Afficher les boutons</summary>
+            <section class="buttons">
+                <article>
+                    <h2>Applaudissements</h2>
+                    <audio id="audio1" src="boutons-sons/applause.mp3" preload="auto"></audio>
+                    <img src="images/button-blue.png" alt="Lire le son 1" data-audio="audio1">
+                    <p>Quand un élève donne une excellente réponse, fait des efforts et montre de la bonne volonté.</p>
+                    <p id="counter1" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Très bien</h2>
+                    <audio id="audio2" src="boutons-sons/very-good.mp3" preload="auto"></audio>
+                    <img src="images/button-green.png" alt="Lire le son 2" data-audio="audio2">
+                    <p>Quand un élève donne une bonne réponse, fait des efforts et montre de la bonne volonté.</p>
+                    <p id="counter2" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Excellent</h2>
+                    <audio id="audio3" src="boutons-sons/excellent.mp3" preload="auto"></audio>
+                    <img src="images/button-red.png" alt="Lire le son 3" data-audio="audio3">
+                    <p>Quand un élève réussit très bien ou fait quelque chose d'inattendu mais de positif.</p>
+                    <p id="counter3" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Bravo</h2>
+                    <audio id="audio4" src="boutons-sons/congrats.mp3" preload="auto"></audio>
+                    <img src="images/button-green.png" alt="Lire le son 4" data-audio="audio4">
+                    <p>Féliciter un ou plusieurs élèves pour ce qu'ils ont accompli.</p>
+                    <p id="counter4" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Youhou</h2>
+                    <audio id="audio5" src="boutons-sons/yee-haw.mp3" preload="auto"></audio>
+                    <img src="images/button-yellow.png" alt="Lire le son 5" data-audio="audio5">
+                    <p>Une démonstration joyeuse pour soutenir ou encourager les élèves.</p>
+                    <p id="counter5" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Waouh</h2>
+                    <audio id="audio6" src="boutons-sons/wow.mp3" preload="auto"></audio>
+                    <img src="images/button-blue.png" alt="Lire le son 6" data-audio="audio6">
+                    <p>Cet élève a été incroyable ! Vous êtes impressionné !</p>
+                    <p id="counter6" class="counter">0</p>
+                </article>
+            </section>
+        </details>
+
+        <h1 class="button-title other-titles"><ion-icon name="thumbs-down-outline" class="icon-down"></ion-icon>Désapprouvé</h1>
+        <details>
+            <summary>Afficher les boutons</summary>
+            <section class="buttons">
+                <article>
+                    <h2>Oh non !</h2>
+                    <audio id="audio7" src="boutons-sons/oh-no.mp3" preload="auto"></audio>
+                    <img src="images/button-pink.png" alt="Lire le son 7" data-audio="audio7">
+                    <p>Exprimer avec humour que la réponse est fausse (et que ce n'est pas grave).</p>
+                    <p id="counter7" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Avertissement</h2>
+                    <audio id="audio8" src="boutons-sons/warning.mp3" preload="auto"></audio>
+                    <img src="images/button-blue.png" alt="Lire le son 8" data-audio="audio8">
+                    <p>Avertir vos élèves que quelque chose va se passer.</p>
+                    <p id="counter8" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Rire démoniaque</h2>
+                    <audio id="audio9" src="boutons-sons/evillaugh.mp3" preload="auto"></audio>
+                    <img src="images/button-yellow.png" alt="Lire le son 9" data-audio="audio9">
+                    <p>Montrer à vos élèves votre côté démoniaque avant de leur donner une tâche difficile.</p>
+                    <p id="counter9" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Mais enfin ?</h2>
+                    <audio id="audio10" src="boutons-sons/what-the-hell.mp3" preload="auto"></audio>
+                    <img src="images/button-orange.png" alt="Lire le son 10" data-audio="audio10">
+                    <p>Exprimer votre surprise (et qu'il faut se remettre au travail).</p>
+                    <p id="counter10" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Ronflement</h2>
+                    <audio id="audio11" src="boutons-sons/snoring.mp3" preload="auto"></audio>
+                    <img src="images/button-green.png" alt="Lire le son 11" data-audio="audio11">
+                    <p>"Mon Dieu, à quoi ressemble ton drôle de petit cerveau ? Ça doit être tellement ennuyeux" (Sherlock Holmes)</p>
+                    <p id="counter11" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Ayez foi</h2>
+                    <audio id="audio12" src="boutons-sons/i-find-your-lack-of-faith-disturbing.mp3" preload="auto"></audio>
+                    <img src="images/button-red.png" alt="Lire le son 12" data-audio="audio12">
+                    <p>"Je trouve votre manque de foi affligeant." (Darth Vader)</p>
+                    <p id="counter12" class="counter">0</p>
+                </article>
+            </section>
+        </details>
+
+        <h1 class="button-title other-titles"><ion-icon name="volume-medium-outline" class="icon-sound"></ion-icon>Sons</h1>
+        <details>
+            <summary>Afficher les boutons</summary>
+            <section class="buttons">
+                <article>
+                    <h2>Buzzer</h2>
+                    <audio id="audio13" src="boutons-sons/wrong-answer.mp3" preload="auto"></audio>
+                    <img src="images/button-blue.png" alt="Lire le son 13" data-audio="audio13">
+                    <p>J'ai le regret de vous informer que la réponse que vous venez de donner est malheureusement fausse.</p>
+                    <p id="counter13" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Sifflet</h2>
+                    <audio id="audio14" src="boutons-sons/whistle.mp3" preload="auto"></audio>
+                    <img src="images/button-green.png" alt="Lire le son 14" data-audio="audio14">
+                    <p>C'est une urgence. Pas le temps de discuter. Il faut travailler.</p>
+                    <p id="counter14" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Cloche</h2>
+                    <audio id="audio15" src="boutons-sons/bell.mp3" preload="auto"></audio>
+                    <img src="images/button-red.png" alt="Lire le son 15" data-audio="audio15">
+                    <p>Cela peut être le signal d'un défi ou d'une discussion de groupe.</p>
+                    <p id="counter15" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>3,2,1 Partez !</h2>
+                    <audio id="audio16" src="boutons-sons/3-2-1-go.mp3" preload="auto"></audio>
+                    <img src="images/button-green.png" alt="Lire le son 16" data-audio="audio16">
+                    <p>C'est le début de la course. Le temps tourne !</p>
+                    <p id="counter16" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Terminé</h2>
+                    <audio id="audio17" src="boutons-sons/game-over.mp3" preload="auto"></audio>
+                    <img src="images/button-yellow.png" alt="Lire le son 17" data-audio="audio17">
+                    <p>On arrête tout ! Le temps est écoulé ! Rendez votre travail.</p>
+                    <p id="counter17" class="counter">0</p>
+                </article>
+            </section>
+        </details>
+
+        <h1 class="button-title other-titles"><ion-icon name="chatbubble-outline" class="icon-action"></ion-icon>Action</h1>
+        <details>
+            <summary>Afficher les boutons</summary>
+            <section class="buttons">
+                <article>
+                    <h2>Silence</h2>
+                    <audio id="audio18" src="boutons-sons/silence.mp3" preload="auto"></audio>
+                    <img src="images/button-pink.png" alt="Lire le son 18" data-audio="audio18">
+                    <p>Silence, les élèves ! Il est temps de revenir à la tâche et de se concentrer !</p>
+                    <p id="counter18" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Déçu</h2>
+                    <audio id="audio19" src="boutons-sons/disappointed-trombone.mp3" preload="auto"></audio>
+                    <img src="images/button-blue.png" alt="Lire le son 19" data-audio="audio19">
+                    <p>La déception mène à un nouvel effort. Ne vous découragez pas !</p>
+                    <p id="counter19" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Alerte info</h2>
+                    <audio id="audio20" src="boutons-sons/breaking-news.mp3" preload="auto"></audio>
+                    <img src="images/button-yellow.png" alt="Lire le son 20" data-audio="audio20">
+                    <p>Annonce spéciale ! Écoutez attentivement ce que votre professeur va révéler !</p>
+                    <p id="counter20" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Au travail</h2>
+                    <audio id="audio21" src="boutons-sons/back-to-work.mp3" preload="auto"></audio>
+                    <img src="images/button-orange.png" alt="Lire le son 21" data-audio="audio21">
+                    <p>J'espère que vous avez bien profité de votre pause méritée et que vous êtes prêts à vous remettre au travail. Enfin !</p>
+                    <p id="counter21" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>STOP</h2>
+                    <audio id="audio22" src="boutons-sons/stop-it.mp3" preload="auto"></audio>
+                    <img src="images/button-green.png" alt="Lire le son 22" data-audio="audio22">
+                    <p>C'est assez explicite : on arrête tout !</p>
+                    <p id="counter22" class="counter">0</p>
+                </article>
+            </section>
+        </details>
+
+        <h1 class="button-title other-titles"><ion-icon name="musical-notes-outline" class="icon-music"></ion-icon>Musique inquiétante</h1>
+        <details>
+            <summary>Afficher les boutons</summary>
+            <section class="buttons">
+                <article>
+                    <h2>Violon triste</h2>
+                    <audio id="audio23" src="boutons-sons/sad-violin.mp3" preload="auto"></audio>
+                    <img src="images/button-yellow.png" alt="Lire le son 23" data-audio="audio23">
+                    <p>C'est triste, mais même si c'est difficile, ne désespérez pas.</p>
+                    <p id="counter23" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Marche impériale</h2>
+                    <audio id="audio24" src="boutons-sons/imperial_march.mp3" preload="auto"></audio>
+                    <img src="images/button-purple.png" alt="Lire le son 24" data-audio="audio24">
+                    <p>C'est le son de l'évaluation. Préparez-vous.</p>
+                    <p id="counter24" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Cantina Star Wars</h2>
+                    <audio id="audio25" src="boutons-sons/cantina-band.mp3" preload="auto"></audio>
+                    <img src="images/button-blue.png" alt="Lire le son 25" data-audio="audio25">
+                    <p>Faites attention. Les apparences peuvent être trompeuses, alors méfiez-vous.</p>
+                    <p id="counter25" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Psychose</h2>
+                    <audio id="audio26" src="boutons-sons/psycho.mp3" preload="auto"></audio>
+                    <img src="images/button-yellow.png" alt="Lire le son 26" data-audio="audio26">
+                    <p>Danger ! Préparez-vous ! Cela peut être n'importe quoi : une question difficile, une évaluation, etc.</p>
+                    <p id="counter26" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Les Dents de la mer</h2>
+                    <audio id="audio27" src="boutons-sons/jaws.mp3" preload="auto"></audio>
+                    <img src="images/button-orange.png" alt="Lire le son 27" data-audio="audio27">
+                    <p>Danger imminent ! Ne bougez pas, restez où vous êtes, n'approchez pas du professeur !</p>
+                    <p id="counter27" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Titanic</h2>
+                    <audio id="audio28" src="boutons-sons/titanic.mp3" preload="auto"></audio>
+                    <img src="images/button-green.png" alt="Lire le son 28" data-audio="audio28">
+                    <p>C'est la catastrophe ! Il est temps de réagir !</p>
+                    <p id="counter28" class="counter">0</p>
+                </article>
+            </section>
+        </details>
+
+        <h1 class="button-title other-titles"><ion-icon name="flame-outline" class="icon-flame"></ion-icon>Célébrer</h1>
+        <details>
+            <summary>Afficher les boutons</summary>
+            <section class="buttons">
+                <article>
+                    <h2>Ode à la joie</h2>
+                    <audio id="audio29" src="boutons-sons/ode-to-joy.mp3" preload="auto"></audio>
+                    <img src="images/button-green.png" alt="Lire le son 29" data-audio="audio29">
+                    <p>C'est assez simple. Célébrons le travail accompli.</p>
+                    <p id="counter29" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Alléluia</h2>
+                    <audio id="audio30" src="boutons-sons/hallelujah.mp3" preload="auto"></audio>
+                    <img src="images/button-red.png" alt="Lire le son 30" data-audio="audio30">
+                    <p>Le travail paie ! Cet élève a enfin trouvé son chemin dans le labyrinthe des connaissances !</p>
+                    <p id="counter30" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Joyeux anniversaire</h2>
+                    <audio id="audio31" src="boutons-sons/happy-birthday.mp3" preload="auto"></audio>
+                    <img src="images/button-orange.png" alt="Lire le son 31" data-audio="audio31">
+                    <p>Prenons un moment pour célébrer et dire combien nous sommes heureux d'être ensemble.</p>
+                    <p id="counter31" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Je suis heureux</h2>
+                    <audio id="audio32" src="boutons-sons/im_happy.mp3" preload="auto"></audio>
+                    <img src="images/button-green.png" alt="Lire le son 32" data-audio="audio32">
+                    <p>Exprimez votre joie face aux résultats de vos élèves. Ils méritent des applaudissements.</p>
+                    <p id="counter32" class="counter">0</p>
+                </article>
+
+                <article>
+                    <h2>Rocky</h2>
+                    <audio id="audio33" src="boutons-sons/rocky.mp3" preload="auto"></audio>
+                    <img src="images/button-blue.png" alt="Lire le son 33" data-audio="audio33">
+                    <p>Le son de la gloire. Vous le méritez ! Vous avez assuré !</p>
+                    <p id="counter33" class="counter">0</p>
+                </article>
+            </section>
+        </details>
+    </main>
+
+    <footer>
+        <div class="date">
+            <p>Réalisé avec <span class="heart">❤︎</span> par <a class="footer-author-link" href="https://yann-houry.netlify.app" target="_blank" rel="noopener noreferrer">Yann Houry</a>, responsable de l'innovation à l'institut Florimont de Genève</p>
+            <nav class="footer-nav">
+                <a href="qrcode.html">QR Code</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="video.html">Vidéo</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="gifs.html">GIF</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="signature.html">Signature</a>
+                <span class="footer-nav-sep">|</span>
+                <a href="captures.html">Captures</a>
+            </nav>
+            <p class="footer-support">
+                <span>Soutenez <span class="footer-brand-name">Ralentir travaux</span> en faisant </span>
+                <a class="footer-support-link" href="https://paypal.me/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Faire un don sur PayPal">
+                    un don sur <i class="fa-brands fa-paypal" aria-hidden="true"></i>
+                </a>
+                <span> ou en </span>
+                <a class="footer-support-link" href="https://www.buymeacoffee.com/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Offrir un café via Buy Me a Coffee">
+                    m'offrant un <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                </a>
+                <span>.</span>
+            </p>
+
+            <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+            <span class="annee">2026</span></div>
+    </footer>
+
+    <script src="js/menu.js"></script>
+    <script src="js/boutons.js"></script>
+</body>
+</html>

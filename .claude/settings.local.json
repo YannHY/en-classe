@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.ralentirtravaux.com)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(lsof -ti:8081)",
+      "Bash(xargs kill)",
+      "Bash(for file in \"/Users/yann/Library/Mobile Documents/com~apple~CloudDocs/Documents/Documents - Mac mini de Admin/HTML-CSS-JS/Claude/apps/en-classe\"/*.html)",
+      "Bash(do)",
+      "Bash(if grep -q \"sound-meter\" \"$file\")",
+      "Bash(then)",
+      "Bash(fi)",
+      "Bash(done)"
+    ]
+  }
+}

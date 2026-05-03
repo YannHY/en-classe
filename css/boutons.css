@@ -1,0 +1,415 @@
+/* ==========================================================================
+   Boutons - Styles specific to the Boutons page
+   Extends the base En Classe styles (styles.css)
+   ========================================================================== */
+
+/* ===== CSS Custom Properties for Boutons ===== */
+:root {
+    --b-bg: #f5f7fa;
+    --b-surface: #ffffff;
+    --b-surface-elevated: #ffffff;
+    --b-text: #2c3e50;
+    --b-text-secondary: #666666;
+    --b-text-muted: #aaaaaa;
+    --b-border: #e0e0e0;
+    --b-accent: #06b6d4;
+    --b-accent-light: #0ea5e9;
+    --b-accent-dark: #0891b2;
+    --b-gradient-accent: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 50%, #38bdf8 100%);
+    --b-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --b-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --b-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.1);
+    --b-shadow-accent: 0 8px 30px rgba(6, 182, 212, 0.2);
+    --b-radius-sm: 8px;
+    --b-radius-md: 12px;
+    --b-radius-lg: 20px;
+    --b-radius-xl: 28px;
+    --b-transition-fast: 150ms ease;
+    --b-transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --b-space-xs: 0.5rem;
+    --b-space-sm: 0.75rem;
+    --b-space-md: 1rem;
+    --b-space-lg: 1.5rem;
+    --b-space-xl: 2rem;
+    --b-space-2xl: 3rem;
+    --b-card-width: 220px;
+}
+
+html.dark-mode,
+body.dark-mode {
+    --b-bg: #1a1a1a;
+    --b-surface: #2d2d2d;
+    --b-surface-elevated: #2d2d2d;
+    --b-text: #ffffff;
+    --b-text-secondary: #cccccc;
+    --b-text-muted: #888888;
+    --b-border: #444444;
+    --b-accent: #22d3ee;
+    --b-accent-light: #06b6d4;
+    --b-accent-dark: #06b6d4;
+    --b-gradient-accent: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #0ea5e9 100%);
+    --b-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --b-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --b-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+    --b-shadow-accent: 0 8px 30px rgba(34, 211, 238, 0.15);
+}
+
+/* ===== LAYOUT OVERRIDES ===== */
+body {
+    padding-left: var(--spacing-md, 1rem);
+    padding-right: var(--spacing-md, 1rem);
+    align-items: stretch;
+}
+
+/* ===== TITLE SPACING ===== */
+.site-title {
+    margin-bottom: var(--spacing-2xl, 3rem);
+}
+
+/* ===== HERO SECTION ===== */
+.txt-presentation {
+    font-size: 1.25rem;
+    text-align: center;
+    color: var(--b-text-secondary);
+    font-weight: 400;
+    max-width: 500px;
+    margin: 0 auto var(--b-space-sm);
+}
+
+.txt-presentation strong {
+    background: var(--b-gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+}
+
+body.dark-mode .txt-presentation strong {
+    background: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.sound-trigger {
+    display: inline-block;
+    cursor: pointer;
+    transition: transform var(--b-transition-fast);
+}
+
+.sound-trigger:hover,
+.sound-trigger:focus-visible {
+    transform: translateY(-2px);
+}
+
+.txt-explication {
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--b-text-secondary);
+    margin-top: var(--b-space-md);
+    font-style: italic;
+    margin-bottom: var(--b-space-lg);
+}
+
+/* Hero Image */
+.presentation {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    margin-bottom: -30px;
+}
+
+.btn-icon {
+    max-width: 160px;
+    filter: drop-shadow(0 20px 40px rgba(6, 182, 212, 0.3));
+    transition: transform var(--b-transition-base);
+}
+
+body.dark-mode .btn-icon {
+    filter: drop-shadow(0 20px 40px rgba(255, 255, 255, 0.25));
+}
+
+.btn-icon:hover {
+    transform: scale(1.05) rotate(-3deg);
+}
+
+@keyframes b-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.img-animee {
+    animation: b-float 4s ease-in-out infinite;
+}
+
+/* ===== MAIN CONTAINER ===== */
+.buttons-main {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 72rem;
+    margin: 0 auto var(--b-space-2xl);
+    background: var(--b-surface);
+    padding: var(--b-space-2xl) var(--b-space-xl);
+    border-radius: var(--b-radius-xl);
+    box-shadow: var(--b-shadow-lg);
+    border: 1px solid var(--b-border);
+}
+
+/* ===== SECTION TITLES ===== */
+.button-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.65rem;
+    font-weight: 400;
+    margin-bottom: var(--b-space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--b-space-sm);
+    color: var(--b-text);
+    -webkit-text-fill-color: var(--b-text);
+    background: none;
+    text-transform: none;
+    letter-spacing: 0;
+    text-align: left;
+    width: auto;
+}
+
+.button-title ion-icon {
+    font-size: 1.2em;
+    color: var(--b-text);
+    opacity: 0.85;
+}
+
+.other-titles {
+    margin-top: var(--b-space-2xl);
+    padding-top: var(--b-space-xl);
+    border-top: 1px solid var(--b-border);
+}
+
+/* ===== ACCORDION ===== */
+details {
+    background: var(--b-bg);
+    border-radius: var(--b-radius-md);
+    margin-bottom: var(--b-space-md);
+    border: 1px solid var(--b-border);
+    overflow: hidden;
+    transition: all var(--b-transition-base);
+}
+
+details[open] {
+    background: var(--b-surface);
+    box-shadow: var(--b-shadow-md);
+}
+
+body.dark-mode details[open] {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+summary {
+    cursor: pointer;
+    padding: var(--b-space-md) var(--b-space-lg);
+    font-weight: 500;
+    color: var(--b-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: var(--b-space-sm);
+    list-style: none;
+    transition: all var(--b-transition-fast);
+    user-select: none;
+}
+
+summary::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--b-accent);
+    border-bottom: 2px solid var(--b-accent);
+    transform: rotate(-45deg);
+    transition: transform var(--b-transition-fast);
+}
+
+details[open] summary::before {
+    transform: rotate(45deg);
+}
+
+summary::-webkit-details-marker { display: none; }
+
+summary:hover {
+    color: var(--b-accent);
+    background: rgba(6, 182, 212, 0.08);
+}
+
+body.dark-mode summary:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+details:last-of-type {
+    margin-bottom: var(--b-space-xl);
+}
+
+/* ===== BUTTONS GRID ===== */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--b-card-width), var(--b-card-width)));
+    justify-content: center;
+    gap: var(--b-space-md);
+    padding: var(--b-space-md) var(--b-space-lg) var(--b-space-lg);
+}
+
+/* ===== BUTTON CARDS ===== */
+.buttons-main article {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--b-space-lg);
+    padding-bottom: calc(var(--b-space-2xl) + 32px);
+    background: var(--b-surface);
+    border: 1px solid var(--b-border);
+    border-radius: var(--b-radius-lg);
+    transition: all var(--b-transition-base);
+}
+
+.buttons-main article::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--b-radius-lg);
+    padding: 2px;
+    background: var(--b-gradient-accent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--b-transition-base);
+}
+
+.buttons-main article:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--b-shadow-accent);
+}
+
+.buttons-main article:hover::before {
+    opacity: 1;
+}
+
+.buttons-main article h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: var(--b-space-sm) 0 var(--b-space-xs);
+    color: var(--b-text);
+    text-align: center;
+}
+
+.buttons-main article p:not(.counter) {
+    font-size: 0.8rem;
+    color: var(--b-text-muted);
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+/* Button Images */
+.buttons-main article img {
+    width: 72px;
+    height: auto;
+    cursor: pointer;
+    transition: all var(--b-transition-fast);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+body.dark-mode .buttons-main article img {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.buttons-main article img:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 8px 16px rgba(6, 182, 212, 0.3));
+}
+
+body.dark-mode .buttons-main article img:hover {
+    filter: drop-shadow(0 8px 16px rgba(255, 255, 255, 0.3));
+}
+
+.buttons-main article img:active {
+    transform: scale(0.95);
+}
+
+/* Counter Badge */
+.counter {
+    position: absolute;
+    bottom: var(--b-space-md);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #7a7a7a 0%, #666666 50%, #525252 100%);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0 var(--b-space-sm);
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* Audio hidden */
+audio { display: none; }
+
+/* ===== RESPONSIVE ===== */
+@media screen and (max-width: 768px) {
+    :root {
+        --b-card-width: 180px;
+    }
+
+    .buttons-main {
+        margin: 0 auto var(--b-space-xl);
+        padding: var(--b-space-lg);
+        border-radius: var(--b-radius-lg);
+    }
+
+    .button-title {
+        font-size: 1.4rem;
+    }
+
+    .buttons {
+        gap: var(--b-space-sm);
+        padding: var(--b-space-sm);
+    }
+
+    .buttons-main article {
+        padding: var(--b-space-md);
+        padding-bottom: calc(var(--b-space-2xl) + 24px);
+    }
+
+    .buttons-main article img {
+        width: 60px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .txt-presentation {
+        font-size: 1rem;
+        padding: 0 var(--b-space-md);
+    }
+
+    .buttons-main {
+        padding: var(--b-space-md);
+    }
+
+    .buttons {
+        grid-template-columns: 1fr 1fr;
+        justify-content: stretch;
+    }
+
+    .buttons-main article h2 {
+        font-size: 0.9rem;
+    }
+
+    .buttons-main article p {
+        font-size: 0.75rem;
+    }
+}
