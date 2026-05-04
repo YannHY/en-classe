@@ -29,6 +29,24 @@ function sanitizeColor(value, fallback = '#18181b') {
   return `#${hex}`;
 }
 
+/** Nettoie le titre affiche dans les exports */
+function sanitizeTitle(value, fallback = 'Mots Croisés') {
+  if (typeof value !== 'string') return fallback;
+  const title = value.replace(/\s+/g, ' ').trim();
+  return title ? title.slice(0, 80) : fallback;
+}
+
+/** Transforme un titre en nom de fichier lisible */
+function slugifyFilename(value, fallback = 'mots-croises') {
+  const slug = String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return slug || fallback;
+}
+
 /**
  * Parse un texte brut (txt, md, csv, coller) et retourne un tableau de mots.
  * Formats supportés :
@@ -577,10 +595,11 @@ class CrosswordRenderer {
    * Génère un canvas complet (grille + définitions) pour l'export PNG.
    */
   exportCanvas(placer, title = 'Mots Croisés') {
+    title = sanitizeTitle(title);
     const dpr = 2; // toujours en haute résolution pour l'export
     const CELL = 44;
     const PAD = 20;
-    const GRID_TOP = 58;
+    const GRID_TOP_BASE = 58;
     const SIDE_PAD = 28;
     const COL_GAP = 32;
     const MIN_CLUE_W = 340;
@@ -591,6 +610,8 @@ class CrosswordRenderer {
     const CLUE_GAP = 5;
     const HEADING_FONT_SIZE = 13;
     const CLUE_FONT_SIZE = 15;
+    const TITLE_FONT_SIZE = 20;
+    const TITLE_LINE_H = 26;
 
     const b = placer.bounds();
     const rows = b.maxR - b.minR + 1;
@@ -609,6 +630,10 @@ class CrosswordRenderer {
 
     const measureCanvas = document.createElement('canvas');
     const measureCtx = measureCanvas.getContext('2d');
+    measureCtx.font = `600 ${TITLE_FONT_SIZE}px 'Inter', sans-serif`;
+    const titleLines = this._wrapTextLines(measureCtx, title, W - SIDE_PAD * 2);
+    const GRID_TOP = GRID_TOP_BASE + Math.max(0, titleLines.length - 1) * TITLE_LINE_H;
+
     const measureColumnHeight = (words) => {
       let y = 0;
       y += HEADING_LINE_H;
@@ -639,11 +664,13 @@ class CrosswordRenderer {
     ctx.fillRect(0, 0, W, totalH);
 
     // Titre
-    ctx.font = `600 20px 'Inter', sans-serif`;
+    ctx.font = `600 ${TITLE_FONT_SIZE}px 'Inter', sans-serif`;
     ctx.fillStyle = '#18181b';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'alphabetic';
-    ctx.fillText(title, W / 2, 36);
+    titleLines.forEach((line, index) => {
+      ctx.fillText(line, W / 2, 36 + index * TITLE_LINE_H);
+    });
 
     // Grille
     const gxOff = (W - gridW) / 2;
@@ -853,6 +880,7 @@ class CrosswordApp {
   _init() {
     // Éléments DOM
     this.wordForm     = document.getElementById('wordForm');
+    this.titleInput   = document.getElementById('crosswordTitleInput');
     this.wordInput    = document.getElementById('wordInput');
     this.clueInput    = document.getElementById('clueInput');
     this.wordList     = document.getElementById('wordList');
@@ -920,6 +948,11 @@ class CrosswordApp {
 
     // Générer
     this.generateBtn.addEventListener('click', () => this._generate());
+
+    // Titre des exports
+    if (this.titleInput) {
+      this.titleInput.addEventListener('input', () => this._setPublishedLink(''));
+    }
 
     // Solution toggle
     this.solutionToggle.addEventListener('change', () => {
@@ -1145,12 +1178,13 @@ class CrosswordApp {
   }
 
   _exportPNG() {
-    const exportCanvas = this.renderer.exportCanvas(this.placer, 'Mots Croisés');
+    const title = this._getCrosswordTitle();
+    const exportCanvas = this.renderer.exportCanvas(this.placer, title);
     exportCanvas.toBlob(blob => {
       const url = URL.createObjectURL(blob);
       const a   = document.createElement('a');
       a.href     = url;
-      a.download = 'mots-croises.png';
+      a.download = `${slugifyFilename(title)}.png`;
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 5000);
     }, 'image/png');
@@ -1310,7 +1344,7 @@ class CrosswordApp {
 
     return {
       slug,
-      title: 'Mots Croisés',
+      title: this._getCrosswordTitle(),
       generatedAt: new Date().toISOString(),
       blockColor: this.renderer.blockColor,
       rows,
@@ -1318,6 +1352,10 @@ class CrosswordApp {
       cells: cells.sort((a, b2) => (a.row - b2.row) || (a.col - b2.col)),
       clues: clueSections,
     };
+  }
+
+  _getCrosswordTitle() {
+    return sanitizeTitle(this.titleInput ? this.titleInput.value : '');
   }
 
   _buildInteractiveHTML(data) {
