@@ -5,6 +5,16 @@
 
 'use strict';
 
+const CLUE_HEADING_DEFAULTS = {
+  fr: { H: 'Horizontalement', V: 'Verticalement' },
+  en: { H: 'Across', V: 'Down' },
+};
+
+const CLUE_HEADING_ARIA_LABELS = {
+  fr: { H: 'Titre des définitions horizontales', V: 'Titre des définitions verticales' },
+  en: { H: 'Across clues heading', V: 'Down clues heading' },
+};
+
 /* ══════════════════════════════════════════════════════════════
    1. UTILITAIRES & PARSER D'IMPORT
 ══════════════════════════════════════════════════════════════ */
@@ -34,6 +44,35 @@ function sanitizeTitle(value, fallback = 'Mots Croisés') {
   if (typeof value !== 'string') return fallback;
   const title = value.replace(/\s+/g, ' ').trim();
   return title ? title.slice(0, 80) : fallback;
+}
+
+/** Nettoie les titres de sections de définitions */
+function sanitizeClueHeading(value, fallback) {
+  if (typeof value !== 'string') return fallback;
+  const heading = value.replace(/\s+/g, ' ').trim();
+  return heading ? heading.slice(0, 40) : fallback;
+}
+
+function normalizeSiteLang(lang) {
+  return lang === 'en' ? 'en' : 'fr';
+}
+
+function getCurrentSiteLang() {
+  return normalizeSiteLang(
+    document.documentElement.lang ||
+    localStorage.getItem('site_lang') ||
+    localStorage.getItem('kanban_lang') ||
+    'fr'
+  );
+}
+
+function getDefaultClueHeading(dir, lang = getCurrentSiteLang()) {
+  return CLUE_HEADING_DEFAULTS[normalizeSiteLang(lang)]?.[dir] || CLUE_HEADING_DEFAULTS.fr[dir];
+}
+
+function isDefaultClueHeading(dir, value) {
+  const normalizedValue = sanitizeClueHeading(value, '');
+  return Object.values(CLUE_HEADING_DEFAULTS).some(defaults => defaults[dir] === normalizedValue);
 }
 
 /** Transforme un titre en nom de fichier lisible */
@@ -594,8 +633,10 @@ class CrosswordRenderer {
   /**
    * Génère un canvas complet (grille + définitions) pour l'export PNG.
    */
-  exportCanvas(placer, title = 'Mots Croisés') {
+  exportCanvas(placer, title = 'Mots Croisés', headings = {}) {
     title = sanitizeTitle(title);
+    const hHeading = sanitizeClueHeading(headings.H, 'Horizontalement').toUpperCase();
+    const vHeading = sanitizeClueHeading(headings.V, 'Verticalement').toUpperCase();
     const dpr = 2; // toujours en haute résolution pour l'export
     const CELL = 44;
     const PAD = 20;
@@ -706,8 +747,8 @@ class CrosswordRenderer {
     const defY = gyOff + gridH + DEFS_TOP_GAP;
     const colX = [SIDE_PAD, SIDE_PAD + CLUE_W + COL_GAP];
     const sections = [
-      { label: 'HORIZONTALEMENT', words: hWords },
-      { label: 'VERTICALEMENT', words: vWords },
+      { label: hHeading, words: hWords },
+      { label: vHeading, words: vWords },
     ];
 
     sections.forEach(({ label, words }, si) => {
@@ -873,6 +914,7 @@ class CrosswordApp {
     this.placer   = new CrosswordPlacer();
     this.renderer = null;
     this._toastTimer = null;
+    this._customClueHeadings = { H: false, V: false };
 
     this._init();
   }
@@ -895,6 +937,8 @@ class CrosswordApp {
     this.publishedLinkUrl = document.getElementById('publishedLinkUrl');
     this.copyPublishedLinkBtn = document.getElementById('copyPublishedLink');
     this.cluesContainer = document.getElementById('cluesContainer');
+    this.hCluesHeading = document.getElementById('hCluesHeading');
+    this.vCluesHeading = document.getElementById('vCluesHeading');
     this.hCluesList   = document.getElementById('hCluesList');
     this.vCluesList   = document.getElementById('vCluesList');
     this.solutionToggle = document.getElementById('solutionToggle');
@@ -909,6 +953,7 @@ class CrosswordApp {
     const initialBlockColor = sanitizeColor(this.gridBgColorInput ? this.gridBgColorInput.value : '#18181b');
     this.renderer.setBlockColor(initialBlockColor);
     if (this.gridBgColorInput) this.gridBgColorInput.value = initialBlockColor;
+    this._syncClueHeadingsWithLanguage(getCurrentSiteLang());
 
     // Modal d'import
     this.importModal = new ImportModal((words, replace) => {
@@ -953,6 +998,35 @@ class CrosswordApp {
     if (this.titleInput) {
       this.titleInput.addEventListener('input', () => this._setPublishedLink(''));
     }
+
+    [this.hCluesHeading, this.vCluesHeading].forEach(heading => {
+      if (!heading) return;
+      const dir = heading.dataset.clueDir;
+      heading.addEventListener('keydown', event => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          heading.blur();
+        }
+      });
+      heading.addEventListener('input', () => {
+        if (dir) {
+          this._customClueHeadings[dir] = !isDefaultClueHeading(dir, heading.textContent);
+        }
+        this._setPublishedLink('');
+      });
+      heading.addEventListener('blur', () => {
+        const fallback = dir ? getDefaultClueHeading(dir) : 'Horizontalement';
+        const next = sanitizeClueHeading(heading.textContent, fallback);
+        heading.textContent = next;
+        if (dir) {
+          this._customClueHeadings[dir] = !isDefaultClueHeading(dir, next);
+        }
+      });
+    });
+
+    document.addEventListener('siteLanguageChanged', event => {
+      this._syncClueHeadingsWithLanguage(event.detail?.lang);
+    });
 
     // Solution toggle
     this.solutionToggle.addEventListener('change', () => {
@@ -1179,7 +1253,7 @@ class CrosswordApp {
 
   _exportPNG() {
     const title = this._getCrosswordTitle();
-    const exportCanvas = this.renderer.exportCanvas(this.placer, title);
+    const exportCanvas = this.renderer.exportCanvas(this.placer, title, this._getClueHeadings());
     exportCanvas.toBlob(blob => {
       const url = URL.createObjectURL(blob);
       const a   = document.createElement('a');
@@ -1347,6 +1421,7 @@ class CrosswordApp {
       title: this._getCrosswordTitle(),
       generatedAt: new Date().toISOString(),
       blockColor: this.renderer.blockColor,
+      clueHeadings: this._getClueHeadings(),
       rows,
       cols,
       cells: cells.sort((a, b2) => (a.row - b2.row) || (a.col - b2.col)),
@@ -1356,6 +1431,30 @@ class CrosswordApp {
 
   _getCrosswordTitle() {
     return sanitizeTitle(this.titleInput ? this.titleInput.value : '');
+  }
+
+  _getClueHeadings() {
+    return {
+      H: sanitizeClueHeading(this.hCluesHeading ? this.hCluesHeading.textContent : '', getDefaultClueHeading('H')),
+      V: sanitizeClueHeading(this.vCluesHeading ? this.vCluesHeading.textContent : '', getDefaultClueHeading('V')),
+    };
+  }
+
+  _syncClueHeadingsWithLanguage(lang) {
+    const normalizedLang = normalizeSiteLang(lang);
+    const headings = { H: this.hCluesHeading, V: this.vCluesHeading };
+
+    Object.entries(headings).forEach(([dir, heading]) => {
+      if (!heading) return;
+      const current = sanitizeClueHeading(heading.textContent, '');
+      const shouldUseDefault = !this._customClueHeadings[dir] || isDefaultClueHeading(dir, current);
+      if (shouldUseDefault) {
+        heading.textContent = getDefaultClueHeading(dir, normalizedLang);
+        this._customClueHeadings[dir] = false;
+      }
+      const ariaLabel = CLUE_HEADING_ARIA_LABELS[normalizedLang]?.[dir] || CLUE_HEADING_ARIA_LABELS.fr[dir];
+      heading.setAttribute('aria-label', ariaLabel);
+    });
   }
 
   _buildInteractiveHTML(data) {
@@ -1581,11 +1680,11 @@ class CrosswordApp {
 
       <aside class="card sidebar">
         <section class="clue-section">
-          <h2>Horizontalement</h2>
+          <h2 id="cluesHeadingH">${_esc(data.clueHeadings?.H || 'Horizontalement')}</h2>
           <ol class="clue-list" id="cluesH"></ol>
         </section>
         <section class="clue-section">
-          <h2>Verticalement</h2>
+          <h2 id="cluesHeadingV">${_esc(data.clueHeadings?.V || 'Verticalement')}</h2>
           <ol class="clue-list" id="cluesV"></ol>
         </section>
         <p class="legend">Astuce: utilisez les flèches du clavier pour naviguer et cliquez une deuxième fois sur une case croisée pour changer de direction.</p>

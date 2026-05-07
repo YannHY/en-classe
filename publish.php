@@ -185,6 +185,11 @@ function validateCrosswordPayload(mixed $input): array
     $cols = requireIntInRange($input['cols'] ?? null, 1, 35, 'cols');
     $title = requireString($input['title'] ?? 'Mots Croisés', 80, 'title');
     $blockColor = normalizeHexColor($input['blockColor'] ?? '#18181b');
+    $headingsInput = is_array($input['clueHeadings'] ?? null) ? $input['clueHeadings'] : [];
+    $clueHeadings = [
+        'H' => requireString($headingsInput['H'] ?? 'Horizontalement', 40, 'clueHeadings.H'),
+        'V' => requireString($headingsInput['V'] ?? 'Verticalement', 40, 'clueHeadings.V'),
+    ];
 
     $cellsInput = $input['cells'] ?? null;
     if (!is_array($cellsInput) || $cellsInput === []) {
@@ -297,6 +302,7 @@ function validateCrosswordPayload(mixed $input): array
         'title' => $title,
         'generatedAt' => (new DateTimeImmutable('now', new DateTimeZone('UTC')))->format(DATE_ATOM),
         'blockColor' => $blockColor,
+        'clueHeadings' => $clueHeadings,
         'rows' => $rows,
         'cols' => $cols,
         'cells' => $cells,
@@ -529,11 +535,11 @@ function renderPublishedCrossword(array $data, string $slug): string
 
       <aside class="card sidebar">
         <section class="clue-section">
-          <h2>Horizontalement</h2>
+          <h2 id="cluesHeadingH">__H_HEADING__</h2>
           <ol class="clue-list" id="cluesH"></ol>
         </section>
         <section class="clue-section">
-          <h2>Verticalement</h2>
+          <h2 id="cluesHeadingV">__V_HEADING__</h2>
           <ol class="clue-list" id="cluesV"></ol>
         </section>
         <p class="legend">Astuce: utilisez les flèches du clavier pour naviguer et cliquez une deuxième fois sur une case croisée pour changer de direction.</p>
@@ -550,6 +556,8 @@ HTML;
     return strtr($template, [
         '__TITLE__' => esc($data['title']),
         '__BLOCK_COLOR__' => esc($data['blockColor']),
+        '__H_HEADING__' => esc($data['clueHeadings']['H'] ?? 'Horizontalement'),
+        '__V_HEADING__' => esc($data['clueHeadings']['V'] ?? 'Verticalement'),
         '__DATE__' => $publishedAt,
         '__DATA_FILE__' => esc($slug . '.json'),
     ]);

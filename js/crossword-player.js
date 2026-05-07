@@ -28,6 +28,8 @@ function renderPublishedCrossword(data) {
   const gridEl = document.getElementById('grid');
   const cluesH = document.getElementById('cluesH');
   const cluesV = document.getElementById('cluesV');
+  const cluesHeadingH = document.getElementById('cluesHeadingH');
+  const cluesHeadingV = document.getElementById('cluesHeadingV');
   const statusEl = document.getElementById('status');
   const cellMap = new Map(data.cells.map((cell) => [cell.key, cell]));
   const inputMap = new Map();
@@ -36,6 +38,8 @@ function renderPublishedCrossword(data) {
   let activeDir = activeWordId ? activeWordId[0] : 'H';
 
   gridEl.style.gridTemplateColumns = `repeat(${data.cols}, var(--cell))`;
+  if (cluesHeadingH) cluesHeadingH.textContent = data.clueHeadings?.H || 'Horizontalement';
+  if (cluesHeadingV) cluesHeadingV.textContent = data.clueHeadings?.V || 'Verticalement';
 
   const setStatus = (message, tone = '') => {
     statusEl.textContent = message;
