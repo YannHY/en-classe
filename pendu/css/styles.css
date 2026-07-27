@@ -1633,7 +1633,8 @@ body.dark-mode .reminder-dialog-select:focus {
    Main Navigation
    ========================================================================== */
 .main-nav {
-    width: min(72rem, 100%);
+    width: 100%;
+    max-width: 90rem;
     margin: 0 auto var(--spacing-lg);
     position: sticky;
     top: 0.75rem;
@@ -2569,7 +2570,6 @@ body.dark-mode .activity-circle[data-state="active"] {
 /* Tablets */
 @media screen and (max-width: 80rem) {
     .main-nav {
-        width: 100%;
         top: 0.5rem;
         margin-bottom: var(--spacing-md);
     }
@@ -3268,5 +3268,125 @@ body.dark-mode .activity-circle[data-state="active"] {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+}
+
+/* Standalone Lecture navigation */
+.main-nav {
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.main-nav-panel {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.9rem;
+    gap: 0.75rem;
+    justify-content: flex-start;
+}
+
+.main-nav-link {
+    gap: 0.38rem;
+    padding: 0.48rem 0.78rem;
+    border-radius: 0.55rem;
+    font-size: 0.86rem;
+}
+
+.main-nav-link-home {
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-right: 0.25rem;
+}
+
+.main-nav-link.main-nav-link-home i,
+.main-nav-link-home i {
+    font-size: 1.15rem;
+}
+
+.main-nav-link i {
+    font-size: 0.82rem;
+}
+
+.main-nav-lang-selector {
+    min-height: 30px;
+    margin-left: auto;
+    padding: 0 0.36rem;
+    gap: 0.28rem;
+    border-radius: 0.48rem;
+}
+
+.main-nav-lang-selector > i {
+    font-size: 0.85rem;
+}
+
+.main-nav-lang-selector .btn-lang {
+    font-size: 0.84rem;
+    padding: 0.18rem 0.3rem;
+}
+
+.main-nav-lang-selector + .theme-toggle {
+    margin-left: 0.65rem;
+}
+
+.theme-toggle {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 0.48rem;
+    font-size: 0.84rem;
+}
+
+@media screen and (min-width: 48.01rem) {
+    .main-nav-bar,
+    .main-nav-toggle {
+        display: none;
+    }
+
+    .main-nav-panel {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        max-height: none;
+        margin-top: 0;
+        opacity: 1;
+        overflow: visible;
+        pointer-events: auto;
+        transform: none;
+    }
+
+    .main-nav-panel > * {
+        opacity: 1;
+        transform: none;
+    }
+
+    .main-nav-lang-selector {
+        margin-left: auto;
+    }
+
+    .main-nav-lang-selector + .theme-toggle {
+        margin-top: 0;
+        margin-left: 0.65rem;
+    }
+}
+
+@media screen and (max-width: 48rem) {
+    .main-nav {
+        width: 100%;
+        max-width: none;
+    }
+
+    .main-nav-bar {
+        padding: 0.25rem 0.35rem;
+        border-radius: 0.7rem;
+    }
+
+    .main-nav-toggle {
+        padding: 0.35rem 0.55rem;
+    }
+
+    .main-nav.is-open .main-nav-panel {
+        padding: 0.5rem;
+        gap: 0.25rem;
     }
 }

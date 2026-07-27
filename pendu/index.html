@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pendu</title>
+    <style>
+      html { background: #f5f7fa; }
+      html.dark-mode { background: #1a1a1a; color-scheme: dark; }
+    </style>
+    <script>
+      try {
+        if (localStorage.getItem('darkMode') === 'enabled') {
+          document.documentElement.classList.add('dark-mode');
+        }
+      } catch (error) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="js/theme.js"></script>
+  </head>
+  <body>
+    <nav class="main-nav" aria-label="Navigation principale">
+      <div class="main-nav-bar">
+        <button
+          id="mainMenuToggle"
+          class="main-nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mainMenuPanel"
+          aria-label="Ouvrir le menu"
+          title="Menu"
+        >
+          <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="main-nav-panel" id="mainMenuPanel">
+        <a href="https://www.ralentirtravaux.com" class="main-nav-link main-nav-link-home" title="Retour à l'accueil" aria-label="Accueil">
+          <i class="fas fa-house" aria-hidden="true"></i>
+        </a>
+        <a href="index.html" class="main-nav-link main-nav-link-active" aria-current="page">
+          <i class="fas fa-spell-check" aria-hidden="true"></i>
+          <span>Pendu</span>
+        </a>
+        <div class="main-nav-lang-selector" role="group" aria-label="Choix de la langue">
+          <i class="fa-solid fa-globe" aria-hidden="true"></i>
+          <button type="button" id="btn-lang-fr" class="btn-lang" data-lang="fr">FR</button>
+          <span class="main-nav-lang-separator" aria-hidden="true">|</span>
+          <button type="button" id="btn-lang-en" class="btn-lang" data-lang="en">EN</button>
+        </div>
+        <button type="button" id="themeToggle" class="theme-toggle" aria-label="Activer le mode sombre" title="Activer le mode sombre">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </button>
+      </div>
+    </nav>
+
+    <h1 class="site-title"><i class="fas fa-spell-check" aria-hidden="true"></i> Pendu</h1>
+
+    <main class="app pendu-app">
+      <section class="game-panel" aria-labelledby="game-title">
+        <div class="topbar">
+          <div>
+            <p class="eyebrow">Jeu de mots</p>
+            <h1 id="game-title">Pendu</h1>
+          </div>
+          <button class="icon-button" id="new-game" type="button" aria-label="Nouvelle partie" title="Nouvelle partie">
+            <i class="fas fa-rotate-right" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="category-picker">
+          <label for="category-filter">Catégorie littéraire</label>
+          <select id="category-filter"></select>
+        </div>
+
+        <div class="game-grid">
+          <div class="gallows-card">
+            <svg class="gallows" viewBox="0 0 260 300" role="img" aria-label="Dessin du pendu">
+              <line x1="35" y1="270" x2="225" y2="270" />
+              <line x1="65" y1="270" x2="65" y2="35" />
+              <line x1="65" y1="35" x2="175" y2="35" />
+              <line x1="175" y1="35" x2="175" y2="70" />
+              <circle class="body-part" data-part="0" cx="175" cy="95" r="25" />
+              <line class="body-part" data-part="1" x1="175" y1="120" x2="175" y2="185" />
+              <line class="body-part" data-part="2" x1="175" y1="138" x2="135" y2="165" />
+              <line class="body-part" data-part="3" x1="175" y1="138" x2="215" y2="165" />
+              <line class="body-part" data-part="4" x1="175" y1="185" x2="140" y2="230" />
+              <line class="body-part" data-part="5" x1="175" y1="185" x2="210" y2="230" />
+            </svg>
+          </div>
+
+          <div class="play-area">
+            <div class="stats">
+              <div>
+                <span>Catégorie</span>
+                <strong id="category">-</strong>
+              </div>
+              <div>
+                <span>Erreurs</span>
+                <strong><span id="mistakes">0</span>/6</strong>
+              </div>
+              <div>
+                <span>Série</span>
+                <strong id="streak">0</strong>
+              </div>
+            </div>
+
+            <div class="word" id="word" aria-live="polite"></div>
+            <p class="message" id="message" aria-live="assertive"></p>
+          </div>
+        </div>
+
+        <div class="keyboard" id="keyboard" aria-label="Clavier"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="date">
+        <p>Réalisé avec <span class="heart">&#x2764;&#xFE0E;</span> par <a class="footer-author-link" href="https://yann-houry.netlify.app" target="_blank" rel="noopener noreferrer">Yann Houry</a>, responsable de l'innovation à l'institut Florimont de Genève</p>
+        <p class="footer-support">
+          <span>Soutenez <span class="footer-brand-name">Ralentir travaux</span> en faisant </span>
+          <a class="footer-support-link" href="https://paypal.me/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Faire un don sur PayPal">
+            un don sur <i class="fa-brands fa-paypal" aria-hidden="true"></i>
+          </a>
+          <span> ou en </span>
+          <a class="footer-support-link" href="https://www.buymeacoffee.com/yannhoury" target="_blank" rel="noopener noreferrer" aria-label="Offrir un café via Buy Me a Coffee">
+            m'offrant un <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+          </a>
+          <span>.</span>
+        </p>
+        <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></p>
+        <span class="annee">2026</span>
+      </div>
+    </footer>
+
+    <script src="js/menu.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

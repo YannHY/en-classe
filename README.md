@@ -148,7 +148,7 @@ Page : `qrcode.html`
 
 ### QR Code Florimont
 
-Page : `florimont.html`
+Page : `outils-images/florimont.html`
 
 - **Générateur simplifié** : crée rapidement un QR code aux couleurs de l'Institut Florimont.
 - **Logo Florimont** : ajoute ou retire le logo selon le besoin.
@@ -246,7 +246,6 @@ Le CLI lit des fichiers texte, Markdown ou CSV, génère une structure de grille
 ├── lecture.html                # Outil de lecture accessible
 ├── boutons.html                # Table de sons
 ├── qrcode.html                 # Générateur complet de QR codes
-├── florimont.html              # QR codes Florimont
 ├── video.html                  # Partage de vidéos
 ├── gifs.html                   # Générateur de GIF
 ├── captures.html               # Encadrement de captures iPhone/iPad
